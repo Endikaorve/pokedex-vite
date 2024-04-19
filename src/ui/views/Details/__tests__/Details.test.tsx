@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react";
 import { Details } from "../Details";
 import { describe, expect, it, vitest } from "vitest";
 import { mockUrlParams, render, serviceMockBuilder } from "@/test/utils";
-import * as pokemonServiceContainer from "@/core/Pokemon/services/_di/Pokemon.service.container";
+import { pokemonServiceContainer } from "@/core/Pokemon/services/_di";
 import { pokemonService } from "@/core/Pokemon/services/Pokemon.service";
 
 describe("Details", () => {

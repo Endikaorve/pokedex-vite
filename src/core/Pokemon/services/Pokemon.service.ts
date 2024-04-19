@@ -1,53 +1,46 @@
-import { StorageRepository } from "@/core/Shared/Storage/domain/StorageRepository";
 import {
   Pokemon,
   PokemonGeneration,
   PokemonSimplified,
 } from "../domain/Pokemon";
-import { PokemonRepository } from "../domain/PokemonRepository";
 
-export interface PokemonServiceDependencies {
-  pokemonRepository: PokemonRepository;
-  storageRepository: StorageRepository;
-}
+import { pokemonApiRepository } from "../infrastructure/api/Pokemon.api.repository";
+import { localStorageRepository } from "@/core/Shared/Storage/infrastructure/localStorage/Storage.localStorage.repository";
 
-export const pokemonService = ({
-  pokemonRepository,
-  storageRepository,
-}: PokemonServiceDependencies) => ({
+export const pokemonService = {
   listByGeneration: async (
     generation: PokemonGeneration
   ): Promise<Pokemon[]> => {
-    const pokemons = await pokemonRepository.listByGeneration(generation);
-    const favoritePokemonIDs = storageRepository.getFavoritePokemonIDs();
+    const pokemons = await pokemonApiRepository.listByGeneration(generation);
+    const favoritePokemonIDs = localStorageRepository.getFavoritePokemonIDs();
 
     return pokemons.map((pokemon) =>
       buildPokemonFromSimplified(pokemon, { favoritePokemonIDs })
     );
   },
   getById: async (id: Pokemon["id"]): Promise<Pokemon> => {
-    const pokemon = await pokemonRepository.getById(id);
-    const favoritePokemonIDs = storageRepository.getFavoritePokemonIDs();
+    const pokemon = await pokemonApiRepository.getById(id);
+    const favoritePokemonIDs = localStorageRepository.getFavoritePokemonIDs();
 
     return buildPokemonFromSimplified(pokemon, { favoritePokemonIDs });
   },
   toggleFavorite: (pokemon: Pokemon): Pokemon => {
-    storageRepository.toggleFavoritePokemon(pokemon.id);
+    localStorageRepository.toggleFavoritePokemon(pokemon.id);
 
     return { ...pokemon, isFavorite: !pokemon.isFavorite };
   },
   listFavorites: async (): Promise<Pokemon[]> => {
-    const favoritePokemonIDs = storageRepository.getFavoritePokemonIDs();
+    const favoritePokemonIDs = localStorageRepository.getFavoritePokemonIDs();
 
     const favoritePokemons = await Promise.all(
-      favoritePokemonIDs.map((id) => pokemonRepository.getById(id))
+      favoritePokemonIDs.map((id) => pokemonApiRepository.getById(id))
     );
 
     return favoritePokemons.map((pokemon) =>
       buildPokemonFromSimplified(pokemon, { favoritePokemonIDs })
     );
   },
-});
+};
 
 const buildPokemonFromSimplified = (
   pokemon: PokemonSimplified,

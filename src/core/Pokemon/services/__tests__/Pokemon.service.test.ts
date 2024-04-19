@@ -1,8 +1,8 @@
 import { describe, expect, it, vitest } from "vitest";
 import { pokemonService } from "../Pokemon.service";
-import { PokemonRepository } from "../../domain/PokemonRepository";
-import { StorageRepository } from "@/core/Shared/Storage/domain/StorageRepository";
 import { Pokemon, PokemonSimplified } from "../../domain/Pokemon";
+import { pokemonApiRepository } from "../../infrastructure/api/Pokemon.api.repository";
+import { localStorageRepository } from "@/core/Shared/Storage/infrastructure/localStorage/Storage.localStorage.repository";
 
 const simplifiedPokemons: PokemonSimplified[] = [
   {
@@ -50,20 +50,14 @@ const favoritePokemonIDs = ["2"];
 describe("PokemonService", () => {
   describe("listByGeneration", async () => {
     it("should return a list of pokemons by generation", async () => {
-      const pokemonRepository: PokemonRepository = {
-        listByGeneration: vitest.fn().mockResolvedValue(simplifiedPokemons),
-        getById: vitest.fn(),
-      };
+      vitest
+        .spyOn(pokemonApiRepository, "listByGeneration")
+        .mockResolvedValue(simplifiedPokemons);
+      vitest
+        .spyOn(localStorageRepository, "getFavoritePokemonIDs")
+        .mockReturnValue(favoritePokemonIDs);
 
-      const storageRepository: StorageRepository = {
-        getFavoritePokemonIDs: vitest.fn().mockReturnValue(favoritePokemonIDs),
-        toggleFavoritePokemon: vitest.fn(),
-      };
-
-      const result = await pokemonService({
-        pokemonRepository,
-        storageRepository,
-      }).listByGeneration("Kanto");
+      const result = await pokemonService.listByGeneration("Kanto");
 
       const expected: Pokemon[] = [
         {
@@ -114,20 +108,14 @@ describe("PokemonService", () => {
 
   describe("getById", async () => {
     it("should return a pokemon by id", async () => {
-      const pokemonRepository: PokemonRepository = {
-        listByGeneration: vitest.fn(),
-        getById: vitest.fn().mockResolvedValue(simplifiedPokemons[0]),
-      };
+      vitest
+        .spyOn(pokemonApiRepository, "getById")
+        .mockResolvedValue(simplifiedPokemons[0]);
+      vitest
+        .spyOn(localStorageRepository, "getFavoritePokemonIDs")
+        .mockReturnValue(favoritePokemonIDs);
 
-      const storageRepository: StorageRepository = {
-        getFavoritePokemonIDs: vitest.fn().mockReturnValue(favoritePokemonIDs),
-        toggleFavoritePokemon: vitest.fn(),
-      };
-
-      const result = await pokemonService({
-        pokemonRepository,
-        storageRepository,
-      }).getById("1");
+      const result = await pokemonService.getById("1");
 
       const expected: Pokemon = {
         id: "1",
@@ -156,15 +144,7 @@ describe("PokemonService", () => {
 
   describe("toggleFavorite", async () => {
     it("should toggle a pokemon as favorite", async () => {
-      const pokemonRepository: PokemonRepository = {
-        listByGeneration: vitest.fn(),
-        getById: vitest.fn(),
-      };
-
-      const storageRepository: StorageRepository = {
-        getFavoritePokemonIDs: vitest.fn(),
-        toggleFavoritePokemon: vitest.fn(),
-      };
+      vitest.spyOn(localStorageRepository, "toggleFavoritePokemon");
 
       const pokemon: Pokemon = {
         id: "1",
@@ -187,10 +167,7 @@ describe("PokemonService", () => {
         isFavorite: false,
       };
 
-      const result = pokemonService({
-        pokemonRepository,
-        storageRepository,
-      }).toggleFavorite(pokemon);
+      const result = pokemonService.toggleFavorite(pokemon);
 
       const expected: Pokemon = {
         id: "1",
@@ -213,27 +190,23 @@ describe("PokemonService", () => {
         isFavorite: true,
       };
 
-      expect(storageRepository.toggleFavoritePokemon).toHaveBeenCalledTimes(1);
+      expect(
+        localStorageRepository.toggleFavoritePokemon
+      ).toHaveBeenCalledTimes(1);
       expect(result).toStrictEqual(expected);
     });
   });
 
   describe("listFavorites", async () => {
     it("should return a list of favorite pokemons", async () => {
-      const pokemonRepository: PokemonRepository = {
-        listByGeneration: vitest.fn(),
-        getById: vitest.fn().mockResolvedValue(simplifiedPokemons[1]),
-      };
+      vitest
+        .spyOn(pokemonApiRepository, "getById")
+        .mockResolvedValue(simplifiedPokemons[1]);
+      vitest
+        .spyOn(localStorageRepository, "getFavoritePokemonIDs")
+        .mockReturnValue(favoritePokemonIDs);
 
-      const storageRepository: StorageRepository = {
-        getFavoritePokemonIDs: vitest.fn().mockReturnValue(favoritePokemonIDs),
-        toggleFavoritePokemon: vitest.fn(),
-      };
-
-      const result = await pokemonService({
-        pokemonRepository,
-        storageRepository,
-      }).listFavorites();
+      const result = await pokemonService.listFavorites();
 
       const expected: Pokemon[] = [
         {
@@ -258,8 +231,8 @@ describe("PokemonService", () => {
         },
       ];
 
-      expect(pokemonRepository.getById).toHaveBeenCalledTimes(1);
-      expect(pokemonRepository.getById).toHaveBeenCalledWith("2");
+      expect(pokemonApiRepository.getById).toHaveBeenCalledTimes(1);
+      expect(pokemonApiRepository.getById).toHaveBeenCalledWith("2");
       expect(result).toStrictEqual(expected);
     });
   });
