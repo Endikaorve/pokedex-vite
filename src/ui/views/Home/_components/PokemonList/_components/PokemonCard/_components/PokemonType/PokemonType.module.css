@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  align-items: center;
+
+  border-radius: 100px;
+  height: 20px;
+  padding: 0 10px;
+  background-color: var(--type-color);
+
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: white;
+}

@@ -1,0 +1,51 @@
+.statsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  width: 100%;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 0 12px;
+
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.statTitle {
+  width: 40px;
+
+  font-weight: 700;
+  text-align: right;
+  color: var(--main-type);
+}
+
+.statBar[value] {
+  --color: var(--main-type);
+  --background: color-mix(in srgb, var(--color), #ffffff 70%);
+
+  appearance: none;
+  border: none;
+  height: 4px;
+  width: 67%; /* Mejorar implementación */
+
+  background: var(--background);
+}
+
+progress[value]::-webkit-progress-bar {
+  border-radius: 10em;
+  background: var(--background);
+}
+
+.statBar[value]::-webkit-progress-value {
+  background: var(--color);
+}
+
+.statBar[value]::-moz-progress-bar {
+  background: var(--color);
+}
