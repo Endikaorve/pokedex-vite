@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { useParams } from "react-router-dom";
 import { usePokemon } from "./_hooks/usePokemon";
 import { PokemonCard } from "../Home/_components/PokemonList/_components/PokemonCard";
 import { pokemonServiceContainer } from "@/core/Pokemon/services/_di";
+import { useParams } from "@/ui/hooks/router";
 
 export const Details: FC = () => {
-  // ## TODO: Sacar
   const { id } = useParams();
 
   if (id === undefined) {
