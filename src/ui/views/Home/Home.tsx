@@ -6,7 +6,7 @@ import { PokemonList } from "./_components/PokemonList";
 import { Search } from "./_components/Search";
 import classes from "./Home.module.css";
 import { usePokemons } from "./_hooks/usePokemons";
-import { pokemonServiceContainer } from "@/core/Pokemon/services/_di";
+import { pokemonService } from "@/core/Pokemon/services/Pokemon.service";
 
 export const Home: FC = () => {
   const [generation, setGeneration] = useState<PokemonGeneration>("Kanto");
@@ -14,7 +14,7 @@ export const Home: FC = () => {
   const { pokemons, hasError, mutate } = usePokemons(generation);
 
   const handleFavoriteToggle = (pokemon: Pokemon) => {
-    const updatedPokemon = pokemonServiceContainer("toggleFavorite")(pokemon);
+    const updatedPokemon = pokemonService.toggleFavorite(pokemon);
 
     const updatedPokemons = pokemons?.map((pokemon) =>
       pokemon.id === updatedPokemon.id ? updatedPokemon : pokemon

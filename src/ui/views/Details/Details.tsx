@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { usePokemon } from "./_hooks/usePokemon";
 import { PokemonCard } from "../Home/_components/PokemonList/_components/PokemonCard";
-import { pokemonServiceContainer } from "@/core/Pokemon/services/_di";
 import { useParams } from "@/ui/hooks/router";
+import { pokemonService } from "@/core/Pokemon/services/Pokemon.service";
 
 export const Details: FC = () => {
   const { id } = useParams();
@@ -36,7 +36,7 @@ export const Details: FC = () => {
   }
 
   const handleFavoriteToggle = () => {
-    const updatedPokemon = pokemonServiceContainer("toggleFavorite")(pokemon);
+    const updatedPokemon = pokemonService.toggleFavorite(pokemon);
 
     mutate(updatedPokemon, {
       revalidate: false,

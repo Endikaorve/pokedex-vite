@@ -1,12 +1,12 @@
 import { PokemonGeneration } from "@/core/Pokemon/domain/Pokemon";
-import { pokemonServiceContainer } from "@/core/Pokemon/services/_di";
+import { pokemonService } from "@/core/Pokemon/services/Pokemon.service";
 import { useQueryService } from "@/ui/hooks/useQueryService";
 
 export const usePokemons = (generation: PokemonGeneration) => {
   const { data, hasError, mutate } = useQueryService(
     "pokemon.listByGeneration",
     [generation],
-    () => pokemonServiceContainer("listByGeneration")(generation)
+    () => pokemonService.listByGeneration(generation)
   );
 
   return { pokemons: data, hasError, mutate };
