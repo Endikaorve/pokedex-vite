@@ -1,8 +1,8 @@
-import { Route, createPath } from "@/ui/router/Router";
 import { FC, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 
 import classes from "./Link.module.css";
+import { Route, createPath } from "@/ui/router/utils";
 
 interface Props {
   route: Route;

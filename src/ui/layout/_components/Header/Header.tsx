@@ -4,8 +4,8 @@ import pokeball from "@/ui/assets/pokeball.svg";
 
 import classes from "./Header.module.css";
 import { Link } from "@/ui/components/Link";
-import { Route } from "@/ui/router/Router";
 import { MainContainer } from "../MainContainer";
+import { Route } from "@/ui/router/utils";
 
 export const Header: FC = () => (
   <header className={classes.container}>
