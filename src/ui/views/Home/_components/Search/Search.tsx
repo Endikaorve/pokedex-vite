@@ -1,17 +1,17 @@
-import { FC } from "react";
+import { FC } from 'react'
 
 import {
   POKEMON_GENERATIONS,
   PokemonGeneration,
-} from "@/core/Pokemon/domain/Pokemon";
+} from '@/core/Pokemon/domain/Pokemon'
 
-import styles from "./Search.module.css";
+import styles from './Search.module.css'
 
 interface Props {
-  generation: string;
-  onGenerationChange: (generation: PokemonGeneration) => void;
-  search: string;
-  onSearchChange: (search: string) => void;
+  generation: string
+  onGenerationChange: (generation: PokemonGeneration) => void
+  search: string
+  onSearchChange: (search: string) => void
 }
 
 export const Search: FC<Props> = ({
@@ -26,7 +26,7 @@ export const Search: FC<Props> = ({
         className={styles.select}
         value={generation}
         onChange={({ target }) => {
-          onGenerationChange(target.value as PokemonGeneration);
+          onGenerationChange(target.value as PokemonGeneration)
         }}
       >
         {POKEMON_GENERATIONS.map((option) => (
@@ -40,9 +40,9 @@ export const Search: FC<Props> = ({
         value={search}
         placeholder="Filtrar por nombre..."
         onChange={({ target }) => {
-          onSearchChange(target.value);
+          onSearchChange(target.value)
         }}
       />
     </section>
-  );
-};
+  )
+}

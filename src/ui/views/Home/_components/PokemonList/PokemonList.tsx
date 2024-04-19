@@ -1,18 +1,18 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-import { Pokemon } from "@/core/Pokemon/domain/Pokemon";
+import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
 
-import { PokemonCard } from "./_components/PokemonCard";
-import { PokemonCardSkeleton } from "./_components/PokemonCardSkeleton";
-import styles from "./PokemonList.module.css";
+import { PokemonCard } from './_components/PokemonCard'
+import { PokemonCardSkeleton } from './_components/PokemonCardSkeleton'
+import styles from './PokemonList.module.css'
 
 interface Props {
-  pokemons: Pokemon[] | undefined;
-  onFavoriteToggle: (pokemon: Pokemon) => void;
+  pokemons: Pokemon[] | undefined
+  onFavoriteToggle: (pokemon: Pokemon) => void
 }
 
 export const PokemonList: FC<Props> = ({ pokemons, onFavoriteToggle }) => {
-  const isLoading = pokemons === undefined;
+  const isLoading = pokemons === undefined
 
   return (
     <section className={styles.container}>
@@ -28,5 +28,5 @@ export const PokemonList: FC<Props> = ({ pokemons, onFavoriteToggle }) => {
             />
           ))}
     </section>
-  );
-};
+  )
+}

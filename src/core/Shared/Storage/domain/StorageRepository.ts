@@ -1,4 +1,4 @@
 export interface StorageRepository {
-  getFavoritePokemonIDs: () => string[];
-  toggleFavoritePokemon: (id: string) => void;
+  getFavoritePokemonIDs: () => string[]
+  toggleFavoritePokemon: (id: string) => void
 }

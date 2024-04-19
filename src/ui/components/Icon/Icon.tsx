@@ -1,20 +1,20 @@
-import { FC } from "react";
-import { Star } from "./icons/Star";
-import { StarFilled } from "./icons/StarFilled";
+import { FC } from 'react'
+import { Star } from './icons/Star'
+import { StarFilled } from './icons/StarFilled'
 
 const icons = {
   star: Star,
   starFilled: StarFilled,
-};
+}
 
-type Icon = keyof typeof icons;
+type Icon = keyof typeof icons
 
 interface Props {
-  icon: Icon;
+  icon: Icon
 }
 
 export const Icon: FC<Props> = ({ icon }) => {
-  const SelectedIcon = icons[icon];
+  const SelectedIcon = icons[icon]
 
   return (
     <svg
@@ -22,9 +22,9 @@ export const Icon: FC<Props> = ({ icon }) => {
       strokeLinejoin="round"
       viewBox="0 0 16 16"
       width="16"
-      style={{ color: "inherit" }}
+      style={{ color: 'inherit' }}
     >
       <SelectedIcon />
     </svg>
-  );
-};
+  )
+}

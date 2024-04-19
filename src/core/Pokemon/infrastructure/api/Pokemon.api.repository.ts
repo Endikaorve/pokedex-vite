@@ -1,15 +1,15 @@
-import { apiClient } from "@/core/_clients/apiClient";
+import { apiClient } from '@/core/_clients/apiClient'
 
-import { PokemonGeneration } from "../../domain/Pokemon";
-import { PokemonRepository } from "../../domain/PokemonRepository";
-import { PokemonDTO, PokemonSimplifiedDTO } from "./dto/Pokemon.dto";
-import { mapPokemonDTOToPokemon } from "./mappers/mapPokemonDTOToPokemon";
+import { PokemonGeneration } from '../../domain/Pokemon'
+import { PokemonRepository } from '../../domain/PokemonRepository'
+import { PokemonDTO, PokemonSimplifiedDTO } from './dto/Pokemon.dto'
+import { mapPokemonDTOToPokemon } from './mappers/mapPokemonDTOToPokemon'
 
 const pokemonGenerations: Record<
   PokemonGeneration,
   {
-    offset: number;
-    limit: number;
+    offset: number
+    limit: number
   }
 > = {
   Kanto: {
@@ -48,32 +48,32 @@ const pokemonGenerations: Record<
     offset: 905,
     limit: 120,
   },
-};
+}
 
 export const pokemonApiRepository: PokemonRepository = {
   listByGeneration: async (generation) => {
-    const { limit, offset } = pokemonGenerations[generation];
+    const { limit, offset } = pokemonGenerations[generation]
 
     const { results } = await apiClient.get<{
-      results: PokemonSimplifiedDTO[];
+      results: PokemonSimplifiedDTO[]
     }>(`https://pokeapi.co/api/v2/pokemon`, {
       params: {
         offset,
         limit,
       },
-    });
+    })
 
     const pokemonsDTO = await Promise.all(
       results.map(({ url }) => apiClient.get<PokemonDTO>(url))
-    );
+    )
 
-    return pokemonsDTO.map(mapPokemonDTOToPokemon);
+    return pokemonsDTO.map(mapPokemonDTOToPokemon)
   },
   getById: async (id) => {
     const pokemonDTO = await apiClient.get<PokemonDTO>(
       `https://pokeapi.co/api/v2/pokemon/${id}`
-    );
+    )
 
-    return mapPokemonDTOToPokemon(pokemonDTO);
+    return mapPokemonDTOToPokemon(pokemonDTO)
   },
-};
+}

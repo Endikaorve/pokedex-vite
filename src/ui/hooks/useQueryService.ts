@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR from 'swr'
 
 // interface QueryOptions {
 //   enabled?: boolean;
@@ -22,11 +22,11 @@ export const useQueryService = <Data>(
   const query = useSWR<Data>(
     [key, ...deps.filter((dep) => dep !== undefined)],
     service
-  );
+  )
 
   return {
     data: query.data,
     hasError: Boolean(query.error),
     mutate: query.mutate,
-  };
-};
+  }
+}

@@ -1,9 +1,9 @@
-import { Pokemon } from "@/core/Pokemon/domain/Pokemon";
-import { FC } from "react";
-import classes from "./PokemonStats.module.css";
+import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
+import { FC } from 'react'
+import classes from './PokemonStats.module.css'
 
 interface Props {
-  stats: Pokemon["stats"];
+  stats: Pokemon['stats']
 }
 
 export const PokemonStats: FC<Props> = ({ stats }) => {
@@ -16,16 +16,16 @@ export const PokemonStats: FC<Props> = ({ stats }) => {
       <Stat title="SDEF" value={stats.specialDefense} />
       <Stat title="SPD" value={stats.speed} />
     </div>
-  );
-};
+  )
+}
 
 interface StatProps {
-  title: string;
-  value: number;
+  title: string
+  value: number
 }
 
 const Stat: FC<StatProps> = ({ title, value }) => {
-  const formattedValue = value.toString().padStart(3, "0");
+  const formattedValue = value.toString().padStart(3, '0')
 
   return (
     <div className={classes.stat}>
@@ -33,5 +33,5 @@ const Stat: FC<StatProps> = ({ title, value }) => {
       <p>{formattedValue}</p>
       <progress className={classes.statBar} value={value} max={255} />
     </div>
-  );
-};
+  )
+}

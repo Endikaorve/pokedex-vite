@@ -1,39 +1,39 @@
-import height from "@/ui/assets/height.svg";
-import weight from "@/ui/assets/weight.svg";
+import height from '@/ui/assets/height.svg'
+import weight from '@/ui/assets/weight.svg'
 
-import { CSSProperties, FC, MouseEvent } from "react";
+import { CSSProperties, FC, MouseEvent } from 'react'
 
-import { Pokemon } from "@/core/Pokemon/domain/Pokemon";
-import { COLORS } from "@/ui/styles/utils/colors";
+import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
+import { COLORS } from '@/ui/styles/utils/colors'
 
-import { PokemonType } from "./_components/PokemonType";
-import { Link } from "@/ui/components/Link";
+import { PokemonType } from './_components/PokemonType'
+import { Link } from '@/ui/components/Link'
 
 // import classes from "./PokemonCard.module.css";
-import { PokemonStats } from "./_components/PokemonStats/PokemonStats";
-import { Icon } from "@/ui/components/Icon/Icon";
+import { PokemonStats } from './_components/PokemonStats/PokemonStats'
+import { Icon } from '@/ui/components/Icon/Icon'
 
 interface Props {
-  pokemon: Pokemon;
-  onFavoriteToggle: (pokemon: Pokemon) => void;
+  pokemon: Pokemon
+  onFavoriteToggle: (pokemon: Pokemon) => void
 }
 
 export const PokemonCard: FC<Props> = ({ pokemon, onFavoriteToggle }) => {
   const toggleFavorite = async (event: MouseEvent) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    onFavoriteToggle(pokemon);
-  };
+    onFavoriteToggle(pokemon)
+  }
 
-  const [mainType] = pokemon.types;
+  const [mainType] = pokemon.types
   const style = {
-    "--main-type": COLORS[mainType],
-  } as CSSProperties;
+    '--main-type': COLORS[mainType],
+  } as CSSProperties
 
-  const normalizedCode = `#${pokemon.id.padStart(3, "0")}`;
+  const normalizedCode = `#${pokemon.id.padStart(3, '0')}`
 
   return (
-    <Link route={{ path: "details", params: { id: pokemon.id } }}>
+    <Link route={{ path: 'details', params: { id: pokemon.id } }}>
       <div className="poke-card" style={style}>
         <div className="poke-card-header">
           <div className="poke-card-header-name">{pokemon.name}</div>
@@ -92,5 +92,5 @@ export const PokemonCard: FC<Props> = ({ pokemon, onFavoriteToggle }) => {
         </div>
       </div>
     </Link>
-  );
-};
+  )
+}

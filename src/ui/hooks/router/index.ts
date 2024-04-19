@@ -1,1 +1,1 @@
-export { useParams } from "./useParams";
+export { useParams } from './useParams'
