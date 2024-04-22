@@ -2,7 +2,7 @@ import { describe, expect, it, vitest } from 'vitest'
 import { pokemonService } from '../Pokemon.service'
 import { Pokemon, PokemonSimplified } from '../../domain/Pokemon'
 import { pokemonApiRepository } from '../../infrastructure/api/Pokemon.api.repository'
-import { localStorageRepository } from '@/core/Favorite/infrastructure/localStorage/Favorite.localStorage.repository'
+import { favoriteLocalStorageRepository } from '@/core/Favorite/infrastructure/localStorage/Favorite.localStorage.repository'
 
 const simplifiedPokemons: PokemonSimplified[] = [
   {
@@ -54,7 +54,7 @@ describe('PokemonService', () => {
         .spyOn(pokemonApiRepository, 'listByGeneration')
         .mockResolvedValue(simplifiedPokemons)
       vitest
-        .spyOn(localStorageRepository, 'getFavoritePokemonIDs')
+        .spyOn(favoriteLocalStorageRepository, 'getFavoritePokemonIDs')
         .mockReturnValue(favoritePokemonIDs)
 
       const result = await pokemonService.listByGeneration('Kanto')
@@ -112,7 +112,7 @@ describe('PokemonService', () => {
         .spyOn(pokemonApiRepository, 'getById')
         .mockResolvedValue(simplifiedPokemons[0])
       vitest
-        .spyOn(localStorageRepository, 'getFavoritePokemonIDs')
+        .spyOn(favoriteLocalStorageRepository, 'getFavoritePokemonIDs')
         .mockReturnValue(favoritePokemonIDs)
 
       const result = await pokemonService.getById('1')
@@ -144,7 +144,7 @@ describe('PokemonService', () => {
 
   describe('toggleFavorite', async () => {
     it('should toggle a pokemon as favorite', async () => {
-      vitest.spyOn(localStorageRepository, 'toggleFavoritePokemon')
+      vitest.spyOn(favoriteLocalStorageRepository, 'toggleFavoritePokemon')
 
       const pokemon: Pokemon = {
         id: '1',
@@ -191,7 +191,7 @@ describe('PokemonService', () => {
       }
 
       expect(
-        localStorageRepository.toggleFavoritePokemon
+        favoriteLocalStorageRepository.toggleFavoritePokemon
       ).toHaveBeenCalledTimes(1)
       expect(result).toStrictEqual(expected)
     })
@@ -203,7 +203,7 @@ describe('PokemonService', () => {
         .spyOn(pokemonApiRepository, 'getById')
         .mockResolvedValue(simplifiedPokemons[1])
       vitest
-        .spyOn(localStorageRepository, 'getFavoritePokemonIDs')
+        .spyOn(favoriteLocalStorageRepository, 'getFavoritePokemonIDs')
         .mockReturnValue(favoritePokemonIDs)
 
       const result = await pokemonService.listFavorites()

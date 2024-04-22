@@ -3,7 +3,7 @@ import { StorageRepository } from '../../domain/FavoriteRepository'
 
 const FAVORITES_KEY = 'favorites'
 
-export const localStorageRepository: StorageRepository = {
+export const favoriteLocalStorageRepository: StorageRepository = {
   toggleFavoritePokemon: (id) => {
     const favorites = getFavoritePokemonIDs()
 

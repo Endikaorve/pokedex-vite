@@ -1,14 +1,14 @@
 import { describe, expect, it, vitest } from 'vitest'
-import { localStorageRepository } from '../Favorite.localStorage.repository'
+import { favoriteLocalStorageRepository } from '../Favorite.localStorage.repository'
 import { localStorageClient } from '@/core/_clients/localStorageClient'
 
-describe('Storage.localStorage.repository', () => {
+describe('Favorite.localStorage.repository', () => {
   describe('toggleFavoritePokemon', () => {
     it('add favorite Pokemon', async () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValue(['2', '3'])
       vitest.spyOn(localStorageClient, 'set').mockImplementation(vitest.fn())
 
-      localStorageRepository.toggleFavoritePokemon('1')
+      favoriteLocalStorageRepository.toggleFavoritePokemon('1')
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(localStorageClient.get).toHaveBeenCalledWith('favorites')
@@ -24,7 +24,7 @@ describe('Storage.localStorage.repository', () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValue(['1', '2', '3'])
       vitest.spyOn(localStorageClient, 'set').mockImplementation(vitest.fn())
 
-      localStorageRepository.toggleFavoritePokemon('1')
+      favoriteLocalStorageRepository.toggleFavoritePokemon('1')
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(localStorageClient.get).toHaveBeenCalledWith('favorites')
@@ -40,7 +40,7 @@ describe('Storage.localStorage.repository', () => {
     it('return favorite Pokemon IDs', async () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValue(['1', '2', '3'])
 
-      const result = localStorageRepository.getFavoritePokemonIDs()
+      const result = favoriteLocalStorageRepository.getFavoritePokemonIDs()
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(localStorageClient.get).toHaveBeenCalledWith('favorites')
@@ -50,7 +50,7 @@ describe('Storage.localStorage.repository', () => {
     it('return empty array when there are no favorite Pokemon', async () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValue(undefined)
 
-      const result = localStorageRepository.getFavoritePokemonIDs()
+      const result = favoriteLocalStorageRepository.getFavoritePokemonIDs()
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(localStorageClient.get).toHaveBeenCalledWith('favorites')
