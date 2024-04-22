@@ -144,7 +144,7 @@ describe('PokemonService', () => {
 
   describe('toggleFavorite', async () => {
     it('should toggle a pokemon as favorite', async () => {
-      vitest.spyOn(favoriteLocalStorageRepository, 'toggleFavoritePokemon')
+      vitest.spyOn(favoriteLocalStorageRepository, 'toggle')
 
       const pokemon: Pokemon = {
         id: '1',
@@ -190,9 +190,7 @@ describe('PokemonService', () => {
         isFavorite: true,
       }
 
-      expect(
-        favoriteLocalStorageRepository.toggleFavoritePokemon
-      ).toHaveBeenCalledTimes(1)
+      expect(favoriteLocalStorageRepository.toggle).toHaveBeenCalledTimes(1)
       expect(result).toStrictEqual(expected)
     })
   })

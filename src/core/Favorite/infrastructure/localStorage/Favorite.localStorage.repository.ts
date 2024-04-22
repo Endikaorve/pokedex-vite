@@ -4,7 +4,7 @@ import { FavoriteRepository } from '../../domain/FavoriteRepository'
 const FAVORITES_KEY = 'favorites'
 
 export const favoriteLocalStorageRepository: FavoriteRepository = {
-  toggleFavoritePokemon: (id) => {
+  toggle: (id) => {
     const favorites = listIDs()
 
     const isAlreadyFavorite = favorites.includes(id)

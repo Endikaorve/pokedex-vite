@@ -8,7 +8,7 @@ describe('Favorite.localStorage.repository', () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValue(['2', '3'])
       vitest.spyOn(localStorageClient, 'set').mockImplementation(vitest.fn())
 
-      favoriteLocalStorageRepository.toggleFavoritePokemon('1')
+      favoriteLocalStorageRepository.toggle('1')
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(localStorageClient.get).toHaveBeenCalledWith('favorites')
@@ -24,7 +24,7 @@ describe('Favorite.localStorage.repository', () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValue(['1', '2', '3'])
       vitest.spyOn(localStorageClient, 'set').mockImplementation(vitest.fn())
 
-      favoriteLocalStorageRepository.toggleFavoritePokemon('1')
+      favoriteLocalStorageRepository.toggle('1')
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(localStorageClient.get).toHaveBeenCalledWith('favorites')

@@ -25,7 +25,7 @@ export const pokemonService = {
     return buildPokemonFromSimplified(pokemon, { favoritePokemonIDs })
   },
   toggleFavorite: (pokemon: Pokemon): Pokemon => {
-    favoriteLocalStorageRepository.toggleFavoritePokemon(pokemon.id)
+    favoriteLocalStorageRepository.toggle(pokemon.id)
 
     return { ...pokemon, isFavorite: !pokemon.isFavorite }
   },
