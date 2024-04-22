@@ -54,7 +54,7 @@ describe('PokemonService', () => {
         .spyOn(pokemonApiRepository, 'listByGeneration')
         .mockResolvedValue(simplifiedPokemons)
       vitest
-        .spyOn(favoriteLocalStorageRepository, 'getFavoritePokemonIDs')
+        .spyOn(favoriteLocalStorageRepository, 'listIDs')
         .mockReturnValue(favoritePokemonIDs)
 
       const result = await pokemonService.listByGeneration('Kanto')
@@ -112,7 +112,7 @@ describe('PokemonService', () => {
         .spyOn(pokemonApiRepository, 'getById')
         .mockResolvedValue(simplifiedPokemons[0])
       vitest
-        .spyOn(favoriteLocalStorageRepository, 'getFavoritePokemonIDs')
+        .spyOn(favoriteLocalStorageRepository, 'listIDs')
         .mockReturnValue(favoritePokemonIDs)
 
       const result = await pokemonService.getById('1')
@@ -203,7 +203,7 @@ describe('PokemonService', () => {
         .spyOn(pokemonApiRepository, 'getById')
         .mockResolvedValue(simplifiedPokemons[1])
       vitest
-        .spyOn(favoriteLocalStorageRepository, 'getFavoritePokemonIDs')
+        .spyOn(favoriteLocalStorageRepository, 'listIDs')
         .mockReturnValue(favoritePokemonIDs)
 
       const result = await pokemonService.listFavorites()

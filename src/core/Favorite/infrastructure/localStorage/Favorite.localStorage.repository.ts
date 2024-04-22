@@ -5,7 +5,7 @@ const FAVORITES_KEY = 'favorites'
 
 export const favoriteLocalStorageRepository: FavoriteRepository = {
   toggleFavoritePokemon: (id) => {
-    const favorites = getFavoritePokemonIDs()
+    const favorites = listIDs()
 
     const isAlreadyFavorite = favorites.includes(id)
 
@@ -17,12 +17,12 @@ export const favoriteLocalStorageRepository: FavoriteRepository = {
 
     addFavorite(id, favorites)
   },
-  getFavoritePokemonIDs: () => {
-    return getFavoritePokemonIDs()
+  listIDs: () => {
+    return listIDs()
   },
 }
 
-const getFavoritePokemonIDs = () => {
+const listIDs = () => {
   return localStorageClient.get<string[]>(FAVORITES_KEY) ?? []
 }
 

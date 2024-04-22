@@ -1,4 +1,4 @@
 export interface FavoriteRepository {
-  getFavoritePokemonIDs: () => string[]
+  listIDs: () => string[]
   toggleFavoritePokemon: (id: string) => void
 }

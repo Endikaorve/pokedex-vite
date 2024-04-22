@@ -36,11 +36,11 @@ describe('Favorite.localStorage.repository', () => {
     })
   })
 
-  describe('getFavoritePokemonIDs', () => {
+  describe('listIDs', () => {
     it('return favorite Pokemon IDs', async () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValue(['1', '2', '3'])
 
-      const result = favoriteLocalStorageRepository.getFavoritePokemonIDs()
+      const result = favoriteLocalStorageRepository.listIDs()
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(localStorageClient.get).toHaveBeenCalledWith('favorites')
@@ -50,7 +50,7 @@ describe('Favorite.localStorage.repository', () => {
     it('return empty array when there are no favorite Pokemon', async () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValue(undefined)
 
-      const result = favoriteLocalStorageRepository.getFavoritePokemonIDs()
+      const result = favoriteLocalStorageRepository.listIDs()
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(localStorageClient.get).toHaveBeenCalledWith('favorites')
