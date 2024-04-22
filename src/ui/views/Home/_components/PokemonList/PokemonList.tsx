@@ -14,19 +14,33 @@ interface Props {
 export const PokemonList: FC<Props> = ({ pokemons, onFavoriteToggle }) => {
   const isLoading = pokemons === undefined
 
+  if (isLoading) {
+    return (
+      <section className={styles.container}>
+        {Array.from(Array(10).keys()).map((index) => (
+          <PokemonCardSkeleton key={index} />
+        ))}
+      </section>
+    )
+  }
+
+  if (pokemons.length === 0) {
+    return (
+      <section className={styles.container}>
+        <h2>No se encontraron Pokémons</h2>
+      </section>
+    )
+  }
+
   return (
     <section className={styles.container}>
-      {isLoading
-        ? Array.from(Array(10).keys()).map((index) => (
-            <PokemonCardSkeleton key={index} />
-          ))
-        : pokemons.map((pokemon) => (
-            <PokemonCard
-              key={pokemon.id}
-              pokemon={pokemon}
-              onFavoriteToggle={onFavoriteToggle}
-            />
-          ))}
+      {pokemons.map((pokemon) => (
+        <PokemonCard
+          key={pokemon.id}
+          pokemon={pokemon}
+          onFavoriteToggle={onFavoriteToggle}
+        />
+      ))}
     </section>
   )
 }
