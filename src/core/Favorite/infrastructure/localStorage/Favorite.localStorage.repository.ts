@@ -1,5 +1,5 @@
 import { localStorageClient } from '@/core/_clients/localStorageClient'
-import { StorageRepository } from '../../domain/StorageRepository'
+import { StorageRepository } from '../../domain/FavoriteRepository'
 
 const FAVORITES_KEY = 'favorites'
 

@@ -1,5 +1,5 @@
 import { describe, expect, it, vitest } from 'vitest'
-import { localStorageRepository } from '../Storage.localStorage.repository'
+import { localStorageRepository } from '../Favorite.localStorage.repository'
 import { localStorageClient } from '@/core/_clients/localStorageClient'
 
 describe('Storage.localStorage.repository', () => {

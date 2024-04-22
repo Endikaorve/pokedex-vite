@@ -2,7 +2,7 @@ import { describe, expect, it, vitest } from 'vitest'
 import { pokemonService } from '../Pokemon.service'
 import { Pokemon, PokemonSimplified } from '../../domain/Pokemon'
 import { pokemonApiRepository } from '../../infrastructure/api/Pokemon.api.repository'
-import { localStorageRepository } from '@/core/Storage/infrastructure/localStorage/Storage.localStorage.repository'
+import { localStorageRepository } from '@/core/Favorite/infrastructure/localStorage/Favorite.localStorage.repository'
 
 const simplifiedPokemons: PokemonSimplified[] = [
   {

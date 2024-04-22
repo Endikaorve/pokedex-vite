@@ -1,3 +1,4 @@
+import { localStorageRepository } from '@/core/Favorite/infrastructure/localStorage/Favorite.localStorage.repository'
 import {
   Pokemon,
   PokemonGeneration,
@@ -5,7 +6,6 @@ import {
 } from '../domain/Pokemon'
 
 import { pokemonApiRepository } from '../infrastructure/api/Pokemon.api.repository'
-import { localStorageRepository } from '@/core/Storage/infrastructure/localStorage/Storage.localStorage.repository'
 
 export const pokemonService = {
   listByGeneration: async (
