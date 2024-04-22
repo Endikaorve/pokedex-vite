@@ -1,9 +1,9 @@
 import { localStorageClient } from '@/core/_clients/localStorageClient'
-import { StorageRepository } from '../../domain/FavoriteRepository'
+import { FavoriteRepository } from '../../domain/FavoriteRepository'
 
 const FAVORITES_KEY = 'favorites'
 
-export const favoriteLocalStorageRepository: StorageRepository = {
+export const favoriteLocalStorageRepository: FavoriteRepository = {
   toggleFavoritePokemon: (id) => {
     const favorites = getFavoritePokemonIDs()
 
