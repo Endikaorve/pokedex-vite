@@ -1,24 +1,24 @@
 :root {
   --color-primary: #dc0a2d;
 
-  --color-rock: #b69e31;
+  --color-bug: #a7b723;
+  --color-dark: #75574c;
+  --color-dragon: #7037ff;
+  --color-electric: #f9cf30;
+  --color-fairy: #e69eac;
+  --color-fighting: #c12239;
+  --color-fire: #f57d31;
+  --color-flying: #a891ec;
   --color-ghost: #70559b;
+  --color-grass: #74cb48;
+  --color-ground: #dec16b;
+  --color-ice: #9ad6df;
+  --color-normal: #aaa67f;
+  --color-poison: #a43e9e;
+  --color-psychic: #fb5584;
+  --color-rock: #b69e31;
   --color-steel: #b7b9d0;
   --color-water: #6493eb;
-  --color-grass: #74cb48;
-  --color-psychic: #fb5584;
-  --color-ice: #9ad6df;
-  --color-dark: #75574c;
-  --color-fairy: #e69eac;
-  --color-normal: #aaa67f;
-  --color-fighting: #c12239;
-  --color-flying: #a891ec;
-  --color-poison: #a43e9e;
-  --color-ground: #dec16b;
-  --color-bug: #a7b723;
-  --color-fire: #f57d31;
-  --color-electric: #f9cf30;
-  --color-dragon: #7037ff;
 }
 
 * {
