@@ -95,7 +95,7 @@ const pokemon: Pokemon = {
   isFavorite: false,
 }
 
-describe('Pokemon.api.repository', () => {
+describe('Pokemon.infra.repository', () => {
   describe('listByGeneration', () => {
     it('should list pokemons by generation', async () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
