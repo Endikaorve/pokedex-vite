@@ -1,7 +1,7 @@
 import { describe, expect, it, vitest } from 'vitest'
 import { pokemonService } from '../Pokemon.service'
 import { Pokemon } from '../../domain/Pokemon'
-import { pokemonInfraRepository } from '../../infrastructure/api/Pokemon.api.repository'
+import { pokemonInfraRepository } from '../../infrastructure/api/Pokemon.infra.repository'
 
 const pokemons: Pokemon[] = [
   {

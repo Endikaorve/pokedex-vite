@@ -1,6 +1,6 @@
 import { apiClient } from '@/core/_clients/apiClient'
 import { describe, expect, it, vitest } from 'vitest'
-import { pokemonInfraRepository } from '../Pokemon.api.repository'
+import { pokemonInfraRepository } from '../Pokemon.infra.repository'
 import { PokemonDTO } from '../dto/Pokemon.dto'
 import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
 import { localStorageClient } from '@/core/_clients/localStorageClient'
