@@ -20,26 +20,29 @@ export const buildPokemon = (
 })
 
 const mapStatsDTOToStats = (stats: PokemonDTO['stats']): Pokemon['stats'] => {
-  const statsMap = stats.reduce((acc, { base_stat, stat }) => {
-    const statNameMapper: Record<
-      PokemonDTO['stats'][0]['stat']['name'],
-      keyof Pokemon['stats']
-    > = {
-      hp: 'hp',
-      attack: 'attack',
-      defense: 'defense',
-      'special-attack': 'specialAttack',
-      'special-defense': 'specialDefense',
-      speed: 'speed',
-    }
+  const statsMap = stats.reduce(
+    (acc, { base_stat, stat }) => {
+      const statNameMapper: Record<
+        PokemonDTO['stats'][0]['stat']['name'],
+        keyof Pokemon['stats']
+      > = {
+        hp: 'hp',
+        attack: 'attack',
+        defense: 'defense',
+        'special-attack': 'specialAttack',
+        'special-defense': 'specialDefense',
+        speed: 'speed',
+      }
 
-    const statName = statNameMapper[stat.name]
+      const statName = statNameMapper[stat.name]
 
-    return {
-      ...acc,
-      [statName]: base_stat,
-    }
-  }, {} as Pokemon['stats'])
+      return {
+        ...acc,
+        [statName]: base_stat,
+      }
+    },
+    {} as Pokemon['stats']
+  )
 
   return statsMap
 }
