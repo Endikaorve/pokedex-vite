@@ -17,7 +17,7 @@ export const PokemonList: FC<Props> = ({ pokemons, onFavoriteToggle }) => {
   if (isLoading) {
     return (
       <section className={styles.container}>
-        {Array.from(Array(10).keys()).map((index) => (
+        {Array.from(Array(9).keys()).map((index) => (
           <PokemonCardSkeleton key={index} />
         ))}
       </section>
