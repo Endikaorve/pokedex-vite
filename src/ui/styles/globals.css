@@ -243,22 +243,19 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 56px;
+  gap: 8px;
+
+  margin-top: 50px;
 }
 
 .poke-card-skeleton-body-type-badge {
   display: flex;
   align-items: center;
   height: 30px;
-  width: 50px;
-  margin-right: 16px;
+  width: 30px;
   padding: 0 10px;
   border-radius: 100px;
   background: white;
-}
-
-.poke-card-skeleton-body-type-badge:last-child {
-  margin-right: 0;
 }
 
 .poke-card-skeleton-body-details {
@@ -269,7 +266,7 @@ a {
 }
 
 .poke-card-skeleton-body-details-content {
-  height: 50px;
+  height: 58px;
   width: 180px;
   background: white;
   border-radius: 100px;
@@ -301,7 +298,7 @@ a {
 }
 
 .poke-card-skeleton-body-description {
-  height: 60px;
+  height: 96px;
   margin: 0 auto;
   width: 90%;
   background: white;
