@@ -5,14 +5,14 @@ import { Home } from '../views/Home'
 export const routes = {
   home: {
     path: '/',
-    element: <Home />,
+    element: Home,
   },
   details: {
     path: '/:id',
-    element: <Details />,
+    element: Details,
   },
   favorites: {
     path: '/favorites',
-    element: <Favorites />,
+    element: Favorites,
   },
 }

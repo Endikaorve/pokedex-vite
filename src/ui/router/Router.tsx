@@ -6,7 +6,14 @@ import { routes } from './routes'
 const router = createBrowserRouter([
   {
     element: <Layout />,
-    children: Object.values(routes).map((route) => route),
+    children: Object.values(routes).map(({ element, path }) => {
+      const Element = element
+
+      return {
+        path: path,
+        element: <Element />,
+      }
+    }),
   },
 ])
 
