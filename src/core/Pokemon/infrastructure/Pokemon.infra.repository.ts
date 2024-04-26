@@ -1,7 +1,7 @@
 import { apiClient } from '@/core/_clients/apiClient'
 
-import { PokemonGeneration } from '../../domain/Pokemon'
-import { PokemonRepository } from '../../domain/PokemonRepository'
+import { PokemonGeneration } from '../domain/Pokemon'
+import { PokemonRepository } from '../domain/PokemonRepository'
 import { PokemonDTO, PokemonSimplifiedDTO } from './dto/Pokemon.dto'
 import { mapPokemonDTOToPokemon } from './mappers/mapPokemonDTOToPokemon'
 import { localStorageClient } from '@/core/_clients/localStorageClient'

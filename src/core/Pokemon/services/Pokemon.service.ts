@@ -1,5 +1,5 @@
 import { Pokemon, PokemonGeneration } from '../domain/Pokemon'
-import { pokemonInfraRepository } from '../infrastructure/api/Pokemon.infra.repository'
+import { pokemonInfraRepository } from '../infrastructure/Pokemon.infra.repository'
 
 export const pokemonService = {
   listByGeneration: (generation: PokemonGeneration) => {
