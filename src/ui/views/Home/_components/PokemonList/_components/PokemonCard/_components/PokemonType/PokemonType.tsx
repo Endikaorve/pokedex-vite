@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { CSSProperties, FC } from 'react'
 
 import { PokemonType as PokemonTypeModel } from '@/core/Pokemon/domain/Pokemon'
 
@@ -22,6 +22,7 @@ import steel from '@/ui/assets/types/steel.svg'
 import water from '@/ui/assets/types/water.svg'
 
 import classes from './PokemonType.module.css'
+import { COLORS } from '@/ui/styles/utils/colors'
 
 const images: Record<PokemonTypeModel, string> = {
   bug,
@@ -49,7 +50,14 @@ interface Props {
 }
 
 export const PokemonType: FC<Props> = ({ type }) => {
+  const style = {
+    '--type-color': COLORS[type],
+  } as CSSProperties
+
   return (
-    <img src={images[type]} alt={`type ${type}`} className={classes.image} />
+    <span className={classes.container} style={style}>
+      <img src={images[type]} alt={`type ${type}`} className={classes.image} />
+      {type}
+    </span>
   )
 }
