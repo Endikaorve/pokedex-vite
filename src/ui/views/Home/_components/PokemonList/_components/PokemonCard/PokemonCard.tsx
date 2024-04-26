@@ -34,11 +34,11 @@ export const PokemonCard: FC<Props> = ({ pokemon, onFavoriteToggle }) => {
 
   return (
     <Link route={{ path: 'details', params: { id: pokemon.id } }}>
-      <div className="poke-card" style={style}>
-        <div className="poke-card-header">
+      <article className="poke-card" style={style}>
+        <header className="poke-card-header">
           <div className="poke-card-header-name">{pokemon.name}</div>
           <div className="poke-card-header-code">{normalizedCode}</div>
-        </div>
+        </header>
         <div className="poke-card-body">
           <img
             className="poke-card-body-pokemon-img"
@@ -90,7 +90,7 @@ export const PokemonCard: FC<Props> = ({ pokemon, onFavoriteToggle }) => {
           </div>
           <PokemonStats stats={pokemon.stats} />
         </div>
-      </div>
+      </article>
     </Link>
   )
 }

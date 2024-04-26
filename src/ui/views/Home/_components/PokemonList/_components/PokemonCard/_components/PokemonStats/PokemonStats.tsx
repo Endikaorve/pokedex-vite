@@ -8,14 +8,14 @@ interface Props {
 
 export const PokemonStats: FC<Props> = ({ stats }) => {
   return (
-    <div className={classes.container}>
+    <ul className={classes.container}>
       <Stat title="HP" value={stats.hp} />
       <Stat title="ATK" value={stats.attack} />
       <Stat title="DEF" value={stats.defense} />
       <Stat title="SATK" value={stats.specialAttack} />
       <Stat title="SDEF" value={stats.specialDefense} />
       <Stat title="SPD" value={stats.speed} />
-    </div>
+    </ul>
   )
 }
 
@@ -28,10 +28,10 @@ const Stat: FC<StatProps> = ({ title, value }) => {
   const formattedValue = value.toString().padStart(3, '0')
 
   return (
-    <div className={classes.stat}>
+    <li className={classes.stat}>
       <p className={classes.statTitle}>{title}</p>
       <p>{formattedValue}</p>
       <progress className={classes.statBar} value={value} max={255} />
-    </div>
+    </li>
   )
 }
