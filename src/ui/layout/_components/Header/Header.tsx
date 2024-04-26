@@ -22,8 +22,8 @@ export const Header: FC = () => (
           </div>
         </Link>
         <ul className={classes.itemList}>
-          <Item path="home">Inicio</Item>
-          <Item path="favorites">Favoritos</Item>
+          <Item path="home">Home</Item>
+          <Item path="favorites">Favorites</Item>
         </ul>
       </div>
     </MainContainer>
