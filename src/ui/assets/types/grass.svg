@@ -2,7 +2,7 @@
   <defs>
     <style>
       .cls-1 {
-        fill: #74cb48;
+        fill: transparent;
       }
       .cls-2 {
         fill: #fff;
