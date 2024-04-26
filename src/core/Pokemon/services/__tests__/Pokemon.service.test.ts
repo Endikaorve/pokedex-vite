@@ -1,7 +1,7 @@
 import { describe, expect, it, vitest } from 'vitest'
 import { pokemonService } from '../Pokemon.service'
 import { Pokemon } from '../../domain/Pokemon'
-import { pokemonApiRepository } from '../../infrastructure/api/Pokemon.api.repository'
+import { pokemonInfraRepository } from '../../infrastructure/api/Pokemon.api.repository'
 
 const pokemons: Pokemon[] = [
   {
@@ -50,7 +50,7 @@ describe('PokemonService', () => {
   describe('listByGeneration', async () => {
     it('should return a list of pokemons by generation', async () => {
       vitest
-        .spyOn(pokemonApiRepository, 'listByGeneration')
+        .spyOn(pokemonInfraRepository, 'listByGeneration')
         .mockResolvedValue(pokemons)
 
       const result = await pokemonService.listByGeneration('Kanto')
@@ -62,7 +62,7 @@ describe('PokemonService', () => {
   describe('getById', async () => {
     it('should return a pokemon by id', async () => {
       const pokemon = pokemons[0]
-      vitest.spyOn(pokemonApiRepository, 'getById').mockResolvedValue(pokemon)
+      vitest.spyOn(pokemonInfraRepository, 'getById').mockResolvedValue(pokemon)
 
       const result = await pokemonService.getById('1')
 
@@ -73,7 +73,7 @@ describe('PokemonService', () => {
   describe('toggleFavorite', async () => {
     it('should toggle a pokemon as favorite', async () => {
       const pokemon = pokemons[0]
-      vitest.spyOn(pokemonApiRepository, 'toggleFavorite')
+      vitest.spyOn(pokemonInfraRepository, 'toggleFavorite')
 
       const result = pokemonService.toggleFavorite(pokemon)
 
@@ -82,7 +82,7 @@ describe('PokemonService', () => {
         isFavorite: false,
       }
 
-      expect(pokemonApiRepository.toggleFavorite).toHaveBeenCalledTimes(1)
+      expect(pokemonInfraRepository.toggleFavorite).toHaveBeenCalledTimes(1)
       expect(result).toStrictEqual(expected)
     })
   })
@@ -90,7 +90,7 @@ describe('PokemonService', () => {
   describe('listFavorites', async () => {
     it('should return a list of favorite pokemons', async () => {
       vitest
-        .spyOn(pokemonApiRepository, 'listFavorites')
+        .spyOn(pokemonInfraRepository, 'listFavorites')
         .mockResolvedValue(pokemons)
 
       const result = await pokemonService.listFavorites()

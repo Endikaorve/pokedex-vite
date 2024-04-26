@@ -1,20 +1,20 @@
 import { Pokemon, PokemonGeneration } from '../domain/Pokemon'
 
-import { pokemonApiRepository } from '../infrastructure/api/Pokemon.api.repository'
+import { pokemonInfraRepository } from '../infrastructure/api/Pokemon.api.repository'
 
 export const pokemonService = {
   listByGeneration: (generation: PokemonGeneration) => {
-    return pokemonApiRepository.listByGeneration(generation)
+    return pokemonInfraRepository.listByGeneration(generation)
   },
   getById: (id: Pokemon['id']) => {
-    return pokemonApiRepository.getById(id)
+    return pokemonInfraRepository.getById(id)
   },
   toggleFavorite: (pokemon: Pokemon): Pokemon => {
-    pokemonApiRepository.toggleFavorite(pokemon)
+    pokemonInfraRepository.toggleFavorite(pokemon)
 
     return { ...pokemon, isFavorite: !pokemon.isFavorite }
   },
   listFavorites: () => {
-    return pokemonApiRepository.listFavorites()
+    return pokemonInfraRepository.listFavorites()
   },
 }

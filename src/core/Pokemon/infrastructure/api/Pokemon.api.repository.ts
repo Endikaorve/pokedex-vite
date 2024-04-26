@@ -53,7 +53,7 @@ const pokemonGenerations: Record<
 
 const FAVORITES_KEY = 'favorites'
 
-export const pokemonApiRepository: PokemonRepository = {
+export const pokemonInfraRepository: PokemonRepository = {
   listByGeneration: async (generation) => {
     const { limit, offset } = pokemonGenerations[generation]
 

@@ -1,6 +1,6 @@
 import { apiClient } from '@/core/_clients/apiClient'
 import { describe, expect, it, vitest } from 'vitest'
-import { pokemonApiRepository } from '../Pokemon.api.repository'
+import { pokemonInfraRepository } from '../Pokemon.api.repository'
 import { PokemonDTO } from '../dto/Pokemon.dto'
 import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
 import { localStorageClient } from '@/core/_clients/localStorageClient'
@@ -104,7 +104,7 @@ describe('Pokemon.api.repository', () => {
         .mockResolvedValueOnce({ results: [{ url: 'url1' }] })
         .mockResolvedValueOnce(pokemonDTO)
 
-      const result = await pokemonApiRepository.listByGeneration('Kanto')
+      const result = await pokemonInfraRepository.listByGeneration('Kanto')
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(apiClient.get).toHaveBeenCalledTimes(2)
@@ -129,7 +129,7 @@ describe('Pokemon.api.repository', () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
       vitest.spyOn(apiClient, 'get').mockResolvedValue(pokemonDTO)
 
-      const result = await pokemonApiRepository.getById('1')
+      const result = await pokemonInfraRepository.getById('1')
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(apiClient.get).toHaveBeenCalledTimes(1)
@@ -146,7 +146,7 @@ describe('Pokemon.api.repository', () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
       vitest.spyOn(localStorageClient, 'set')
 
-      pokemonApiRepository.toggleFavorite(pokemon)
+      pokemonInfraRepository.toggleFavorite(pokemon)
 
       expect(localStorageClient.set).toHaveBeenCalledTimes(1)
       expect(localStorageClient.set).toHaveBeenCalledWith('favorites', ['1'])
@@ -158,7 +158,7 @@ describe('Pokemon.api.repository', () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
       vitest.spyOn(apiClient, 'get')
 
-      const result = await pokemonApiRepository.listFavorites()
+      const result = await pokemonInfraRepository.listFavorites()
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(apiClient.get).toHaveBeenCalledTimes(0)
@@ -169,7 +169,7 @@ describe('Pokemon.api.repository', () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce(['1'])
       vitest.spyOn(apiClient, 'get').mockResolvedValueOnce(pokemonDTO)
 
-      const result = await pokemonApiRepository.listFavorites()
+      const result = await pokemonInfraRepository.listFavorites()
 
       expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(apiClient.get).toHaveBeenCalledTimes(1)
