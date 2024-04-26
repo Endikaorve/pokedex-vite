@@ -33,9 +33,14 @@ export const Home: FC = () => {
     )
   }
 
-  const filteredPokemons = pokemons?.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(search.toLowerCase())
-  )
+  const filteredPokemons = pokemons?.filter((pokemon) => {
+    const lowerCaseSearch = search.toLowerCase()
+
+    return (
+      pokemon.name.toLowerCase().includes(lowerCaseSearch) ||
+      pokemon.types.some((type) => type.toLowerCase().includes(lowerCaseSearch))
+    )
+  })
 
   return (
     <main className={classes.container}>
