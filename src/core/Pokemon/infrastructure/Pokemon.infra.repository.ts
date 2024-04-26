@@ -3,7 +3,7 @@ import { apiClient } from '@/core/_clients/apiClient'
 import { PokemonGeneration } from '../domain/Pokemon'
 import { PokemonRepository } from '../domain/PokemonRepository'
 import { PokemonDTO, PokemonSimplifiedDTO } from './dto/Pokemon.dto'
-import { mapPokemonDTOToPokemon } from './mappers/mapPokemonDTOToPokemon'
+import { buildPokemon } from './mappers/buildPokemon'
 import { localStorageClient } from '@/core/_clients/localStorageClient'
 
 const pokemonGenerations: Record<
@@ -73,7 +73,7 @@ export const pokemonInfraRepository: PokemonRepository = {
     const favoritePokemonIDs = listIDs()
 
     return pokemonsDTO.map((pokemonDTO) =>
-      mapPokemonDTOToPokemon(pokemonDTO, favoritePokemonIDs)
+      buildPokemon(pokemonDTO, favoritePokemonIDs)
     )
   },
   getById: async (id) => {
@@ -83,7 +83,7 @@ export const pokemonInfraRepository: PokemonRepository = {
 
     const favoritePokemonIDs = listIDs()
 
-    return mapPokemonDTOToPokemon(pokemonDTO, favoritePokemonIDs)
+    return buildPokemon(pokemonDTO, favoritePokemonIDs)
   },
   toggleFavorite: ({ id }) => {
     const favorites = listIDs()
@@ -108,7 +108,7 @@ export const pokemonInfraRepository: PokemonRepository = {
     )
 
     return favoritePokemons.map((pokemonDTO) =>
-      mapPokemonDTOToPokemon(pokemonDTO, favoritePokemonIDs)
+      buildPokemon(pokemonDTO, favoritePokemonIDs)
     )
   },
 }

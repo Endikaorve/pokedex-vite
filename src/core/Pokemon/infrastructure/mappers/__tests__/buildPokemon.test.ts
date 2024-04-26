@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { mapPokemonDTOToPokemon } from '../mapPokemonDTOToPokemon'
+import { buildPokemon } from '../buildPokemon'
 import { PokemonDTO } from '../../dto/Pokemon.dto'
 import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
 
@@ -72,8 +72,8 @@ const pokemonDTO: PokemonDTO = {
   ],
 }
 
-describe('mapPokemonDTOToPokemon', () => {
-  it('mappea correctamente un Pokemon desde los datos del API', () => {
+describe('buildPokemon', () => {
+  it('build the pokemon from API data', () => {
     const expected: Pokemon = {
       id: '1',
       name: 'bulbasaur',
@@ -95,13 +95,13 @@ describe('mapPokemonDTOToPokemon', () => {
       isFavorite: false,
     }
 
-    const result = mapPokemonDTOToPokemon(pokemonDTO, [])
+    const result = buildPokemon(pokemonDTO, [])
 
     expect(result).toEqual(expected)
   })
 
-  it('es favorito cuando su id está en el array de ids favoritos', () => {
-    const { isFavorite } = mapPokemonDTOToPokemon(pokemonDTO, ['1'])
+  it('is favorite when the id is included in the list of favorite ids', () => {
+    const { isFavorite } = buildPokemon(pokemonDTO, ['1'])
 
     expect(isFavorite).toEqual(true)
   })

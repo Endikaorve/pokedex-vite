@@ -2,7 +2,7 @@ import { Pokemon, PokemonType } from '@/core/Pokemon/domain/Pokemon'
 
 import { PokemonDTO } from '../dto/Pokemon.dto'
 
-export const mapPokemonDTOToPokemon = (
+export const buildPokemon = (
   pokemonDTO: PokemonDTO,
   favoritePokemonIDs: string[]
 ): Pokemon => ({
