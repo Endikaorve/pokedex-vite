@@ -2,7 +2,8 @@ import { apiClient } from '@/core/_clients/apiClient'
 import { describe, expect, it, vitest } from 'vitest'
 import { pokemonApiRepository } from '../Pokemon.api.repository'
 import { PokemonDTO } from '../dto/Pokemon.dto'
-import { PokemonSimplified } from '@/core/Pokemon/domain/Pokemon'
+import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
+import { localStorageClient } from '@/core/_clients/localStorageClient'
 
 const pokemonDTO: PokemonDTO = {
   id: 1,
@@ -73,7 +74,7 @@ const pokemonDTO: PokemonDTO = {
   ],
 }
 
-const pokemonSimpified: PokemonSimplified = {
+const pokemon: Pokemon = {
   id: '1',
   name: 'bulbasaur',
   height: 0.7,
@@ -91,11 +92,13 @@ const pokemonSimpified: PokemonSimplified = {
     specialDefense: 67,
     speed: 69,
   },
+  isFavorite: false,
 }
 
 describe('Pokemon.api.repository', () => {
   describe('listByGeneration', () => {
     it('should list pokemons by generation', async () => {
+      vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
       vitest
         .spyOn(apiClient, 'get')
         .mockResolvedValueOnce({ results: [{ url: 'url1' }] })
@@ -103,6 +106,7 @@ describe('Pokemon.api.repository', () => {
 
       const result = await pokemonApiRepository.listByGeneration('Kanto')
 
+      expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(apiClient.get).toHaveBeenCalledTimes(2)
       expect(apiClient.get).toHaveBeenNthCalledWith(
         1,
@@ -116,22 +120,65 @@ describe('Pokemon.api.repository', () => {
       )
       expect(apiClient.get).toHaveBeenNthCalledWith(2, 'url1')
 
-      expect(result).toEqual([pokemonSimpified])
+      expect(result).toEqual([pokemon])
     })
   })
 
   describe('getById', () => {
     it('should get a pokemon by id', async () => {
+      vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
       vitest.spyOn(apiClient, 'get').mockResolvedValue(pokemonDTO)
 
       const result = await pokemonApiRepository.getById('1')
 
+      expect(localStorageClient.get).toHaveBeenCalledTimes(1)
       expect(apiClient.get).toHaveBeenCalledTimes(1)
       expect(apiClient.get).toHaveBeenCalledWith(
         'https://pokeapi.co/api/v2/pokemon/1'
       )
 
-      expect(result).toEqual(pokemonSimpified)
+      expect(result).toEqual(pokemon)
+    })
+  })
+
+  describe('toggleFavorite', () => {
+    it('should toggle favorite', async () => {
+      vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
+      vitest.spyOn(localStorageClient, 'set')
+
+      pokemonApiRepository.toggleFavorite(pokemon)
+
+      expect(localStorageClient.set).toHaveBeenCalledTimes(1)
+      expect(localStorageClient.set).toHaveBeenCalledWith('favorites', ['1'])
+    })
+  })
+
+  describe('listFavorites', () => {
+    it('when no favorites', async () => {
+      vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
+      vitest.spyOn(apiClient, 'get')
+
+      const result = await pokemonApiRepository.listFavorites()
+
+      expect(localStorageClient.get).toHaveBeenCalledTimes(1)
+      expect(apiClient.get).toHaveBeenCalledTimes(0)
+      expect(result).toEqual([])
+    })
+
+    it('list favorites', async () => {
+      vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce(['1'])
+      vitest.spyOn(apiClient, 'get').mockResolvedValueOnce(pokemonDTO)
+
+      const result = await pokemonApiRepository.listFavorites()
+
+      expect(localStorageClient.get).toHaveBeenCalledTimes(1)
+      expect(apiClient.get).toHaveBeenCalledTimes(1)
+      expect(result).toEqual([
+        {
+          ...pokemon,
+          isFavorite: true,
+        },
+      ])
     })
   })
 })

@@ -18,7 +18,7 @@ export type PokemonType =
   | 'steel'
   | 'water'
 
-export interface PokemonSimplified {
+export interface Pokemon {
   id: string
   name: string
   height: number
@@ -36,9 +36,6 @@ export interface PokemonSimplified {
     specialDefense: number
     speed: number
   }
-}
-
-export interface Pokemon extends PokemonSimplified {
   isFavorite: boolean
 }
 
