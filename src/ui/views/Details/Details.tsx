@@ -15,7 +15,7 @@ export const Details: FC = () => {
     )
   }
 
-  const { pokemon, hasError, mutate } = usePokemon(id)
+  const { pokemon, isValidating, hasError, mutate } = usePokemon(id)
 
   if (hasError) {
     return (
@@ -25,7 +25,7 @@ export const Details: FC = () => {
     )
   }
 
-  const isLoading = pokemon === undefined
+  const isLoading = pokemon === undefined || isValidating
 
   if (isLoading) {
     return (

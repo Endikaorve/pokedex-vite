@@ -3,11 +3,11 @@ import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
 import { useQueryService } from '@/ui/hooks/useQueryService'
 
 export const usePokemon = (id: Pokemon['id']) => {
-  const { data, hasError, mutate } = useQueryService(
+  const { data, isValidating, hasError, mutate } = useQueryService(
     'pokemon.getById',
     [],
     () => pokemonService.getById(id)
   )
 
-  return { pokemon: data, hasError, mutate }
+  return { pokemon: data, isValidating, hasError, mutate }
 }

@@ -26,6 +26,7 @@ export const useQueryService = <Data>(
 
   return {
     data: query.data,
+    isValidating: query.isValidating,
     hasError: Boolean(query.error),
     mutate: query.mutate,
   }
