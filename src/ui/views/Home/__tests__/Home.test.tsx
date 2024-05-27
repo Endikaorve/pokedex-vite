@@ -1,15 +1,11 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { Home } from '../Home'
-import { afterEach, describe, expect, it, vitest } from 'vitest'
+// import { describe, expect, it } from 'vitest'
 import { render, serviceMockBuilder } from '@/test/utils'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
 import { pokemonBuilder } from '@/core/Pokemon/domain/__builders__/Pokemon.builder'
 
 describe('Home', () => {
-  afterEach(() => {
-    vitest.clearAllMocks()
-  })
-
   it('muestra el listado de pokemons', async () => {
     serviceMockBuilder(pokemonService, 'listByGeneration')
       .withValue([

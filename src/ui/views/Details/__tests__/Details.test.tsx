@@ -1,6 +1,5 @@
 import { screen } from '@testing-library/react'
 import { Details } from '../Details'
-import { describe, expect, it } from 'vitest'
 import { mockUrlParams, render, serviceMockBuilder } from '@/test/utils'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
 import { pokemonBuilder } from '@/core/Pokemon/domain/__builders__/Pokemon.builder'

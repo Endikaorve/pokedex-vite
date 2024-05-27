@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest'
 import { buildPokemon } from '../buildPokemon'
 import { PokemonDTO } from '../../dto/Pokemon.dto'
 import { Pokemon } from '@/core/Pokemon/domain/Pokemon'

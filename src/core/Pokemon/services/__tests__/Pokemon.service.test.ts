@@ -1,4 +1,4 @@
-import { describe, expect, it, vitest } from 'vitest'
+import { vitest } from 'vitest'
 import { pokemonService } from '../Pokemon.service'
 import { Pokemon } from '../../domain/Pokemon'
 import { pokemonInfraRepository } from '../../infrastructure/Pokemon.infra.repository'
