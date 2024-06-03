@@ -36,8 +36,8 @@ export const PokemonCard: FC<Props> = ({ pokemon, onFavoriteToggle }) => {
     <Link route={{ path: 'details', params: { id: pokemon.id } }}>
       <article className="poke-card" style={style}>
         <header className="poke-card-header">
-          <div className="poke-card-header-name">{pokemon.name}</div>
-          <div className="poke-card-header-code">{normalizedCode}</div>
+          <p className="poke-card-header-name">{pokemon.name}</p>
+          <p className="poke-card-header-code">{normalizedCode}</p>
         </header>
         <div className="poke-card-body">
           <img

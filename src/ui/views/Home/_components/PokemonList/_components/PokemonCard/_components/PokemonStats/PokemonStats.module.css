@@ -31,19 +31,22 @@
   border: none;
   height: 4px;
   width: 75%; /* Mejorar implementación */
+  border-radius: 10px;
 
   background: var(--background);
 }
 
 progress[value]::-webkit-progress-bar {
-  border-radius: 10em;
+  border-radius: 10px;
   background: var(--background);
 }
 
 .statBar[value]::-webkit-progress-value {
+  border-radius: 10px;
   background: var(--color);
 }
 
 .statBar[value]::-moz-progress-bar {
+  border-radius: 10px;
   background: var(--color);
 }
