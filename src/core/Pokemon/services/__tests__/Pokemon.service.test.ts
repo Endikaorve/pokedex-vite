@@ -1,7 +1,6 @@
-import { vitest } from 'vitest'
-import { pokemonService } from '../Pokemon.service'
+import { pokemonService, setPokemonRepository } from '../Pokemon.service'
 import { Pokemon } from '../../domain/Pokemon'
-import { pokemonInfraRepository } from '../../infrastructure/Pokemon.infra.repository'
+import { PokemonRepository } from '../../domain/PokemonRepository'
 
 const pokemons: Pokemon[] = [
   {
@@ -47,33 +46,39 @@ const pokemons: Pokemon[] = [
 ]
 
 describe('PokemonService', () => {
-  describe('listByGeneration', async () => {
-    it('should return a list of pokemons by generation', async () => {
-      vitest
-        .spyOn(pokemonInfraRepository, 'listByGeneration')
-        .mockResolvedValue(pokemons)
+  const mockRepository: PokemonRepository = {
+    listByGeneration: vitest.fn().mockResolvedValue(pokemons),
+    getById: vitest.fn().mockResolvedValue(pokemons[0]),
+    toggleFavorite: vitest.fn(),
+    listFavorites: vitest.fn().mockResolvedValue(pokemons),
+  }
 
+  beforeEach(() => {
+    setPokemonRepository(mockRepository)
+    vitest.clearAllMocks()
+  })
+
+  describe('listByGeneration', () => {
+    it('should return a list of pokemons by generation', async () => {
       const result = await pokemonService.listByGeneration('Kanto')
 
+      expect(mockRepository.listByGeneration).toHaveBeenCalledWith('Kanto')
       expect(result).toStrictEqual(pokemons)
     })
   })
 
-  describe('getById', async () => {
+  describe('getById', () => {
     it('should return a pokemon by id', async () => {
-      const pokemon = pokemons[0]
-      vitest.spyOn(pokemonInfraRepository, 'getById').mockResolvedValue(pokemon)
-
       const result = await pokemonService.getById('1')
 
-      expect(result).toStrictEqual(pokemon)
+      expect(mockRepository.getById).toHaveBeenCalledWith('1')
+      expect(result).toStrictEqual(pokemons[0])
     })
   })
 
-  describe('toggleFavorite', async () => {
-    it('should toggle a pokemon as favorite', async () => {
+  describe('toggleFavorite', () => {
+    it('should toggle a pokemon as favorite', () => {
       const pokemon = pokemons[0]
-      vitest.spyOn(pokemonInfraRepository, 'toggleFavorite')
 
       const result = pokemonService.toggleFavorite(pokemon)
 
@@ -82,19 +87,16 @@ describe('PokemonService', () => {
         isFavorite: false,
       }
 
-      expect(pokemonInfraRepository.toggleFavorite).toHaveBeenCalledTimes(1)
+      expect(mockRepository.toggleFavorite).toHaveBeenCalledWith(pokemon)
       expect(result).toStrictEqual(expected)
     })
   })
 
-  describe('listFavorites', async () => {
+  describe('listFavorites', () => {
     it('should return a list of favorite pokemons', async () => {
-      vitest
-        .spyOn(pokemonInfraRepository, 'listFavorites')
-        .mockResolvedValue(pokemons)
-
       const result = await pokemonService.listFavorites()
 
+      expect(mockRepository.listFavorites).toHaveBeenCalled()
       expect(result).toStrictEqual(pokemons)
     })
   })
