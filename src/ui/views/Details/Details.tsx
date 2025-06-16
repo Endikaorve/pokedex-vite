@@ -3,6 +3,7 @@ import { usePokemon } from './_hooks/usePokemon'
 import { PokemonCard } from '../Home/_components/PokemonList/_components/PokemonCard'
 import { useParams } from '@/ui/hooks/router'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
+import { Main } from '@/ui/components/Main'
 
 export const Details: FC = () => {
   const { id } = useParams()
@@ -44,8 +45,8 @@ export const Details: FC = () => {
   }
 
   return (
-    <main>
+    <Main>
       <PokemonCard pokemon={pokemon} onFavoriteToggle={handleFavoriteToggle} />
-    </main>
+    </Main>
   )
 }

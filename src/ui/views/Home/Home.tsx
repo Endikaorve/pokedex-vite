@@ -4,9 +4,9 @@ import { Pokemon, PokemonGeneration } from '@/core/Pokemon/domain/Pokemon'
 
 import { PokemonList } from './_components/PokemonList'
 import { Search, StatFilter } from './_components/Search'
-import classes from './Home.module.css'
 import { usePokemons } from './_hooks/usePokemons'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
+import { Main } from '@/ui/components/Main'
 
 export const Home: FC = () => {
   const [generation, setGeneration] = useState<PokemonGeneration>('Kanto')
@@ -41,7 +41,7 @@ export const Home: FC = () => {
   const filteredPokemons = filterPokemons(pokemons, search, statFilter)
 
   return (
-    <main className={classes.container}>
+    <Main>
       <Search
         generation={generation}
         search={search}
@@ -54,7 +54,7 @@ export const Home: FC = () => {
         pokemons={filteredPokemons}
         onFavoriteToggle={handleFavoriteToggle}
       />
-    </main>
+    </Main>
   )
 }
 

@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { useFavorites } from './_hooks/useFavorites'
-import classes from './Favorites.module.css'
 import { PokemonList } from '../Home/_components/PokemonList'
 import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
+import { Main } from '@/ui/components/Main'
 
 export const Favorites: FC = () => {
   const { pokemons, hasError, mutate } = useFavorites()
@@ -27,13 +27,11 @@ export const Favorites: FC = () => {
   }
 
   return (
-    <main>
-      <main className={classes.container}>
-        <PokemonList
-          pokemons={pokemons}
-          onFavoriteToggle={handleFavoriteToggle}
-        />
-      </main>
-    </main>
+    <Main>
+      <PokemonList
+        pokemons={pokemons}
+        onFavoriteToggle={handleFavoriteToggle}
+      />
+    </Main>
   )
 }
