@@ -1,6 +1,5 @@
 import { FC, useState } from 'react'
 import { useFavorites } from './_hooks/useFavorites'
-import { useTeamAnalysis } from './_hooks/useTeamAnalysis'
 import { PokemonList } from '../Home/_components/PokemonList'
 import { TeamAnalysis } from './_components/TeamAnalysis'
 import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
@@ -10,11 +9,6 @@ import styles from './Favorites.module.css'
 
 export const Favorites: FC = () => {
   const { pokemons, hasError, mutate } = useFavorites()
-  const {
-    analysis,
-    canAnalyze,
-    error: analysisError,
-  } = useTeamAnalysis(pokemons)
   const [showAnalysis, setShowAnalysis] = useState(false)
 
   const handleFavoriteToggle = (pokemon: Pokemon) => {
@@ -30,6 +24,12 @@ export const Favorites: FC = () => {
   const handleAnalyzeTeam = () => {
     setShowAnalysis(!showAnalysis)
   }
+
+  const canAnalyze = pokemons && pokemons.length > 0 && pokemons.length <= 6
+  const analysisError =
+    pokemons && pokemons.length > 6
+      ? 'El equipo no puede tener más de 6 Pokémon'
+      : null
 
   if (hasError) {
     return (
@@ -62,7 +62,9 @@ export const Favorites: FC = () => {
         </div>
       )}
 
-      {showAnalysis && analysis && <TeamAnalysis analysis={analysis} />}
+      {showAnalysis && canAnalyze && pokemons && (
+        <TeamAnalysis team={pokemons} />
+      )}
     </Main>
   )
 }
