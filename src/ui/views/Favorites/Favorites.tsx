@@ -6,6 +6,7 @@ import { TeamAnalysis } from './_components/TeamAnalysis'
 import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
 import { Main } from '@/ui/components/Main'
+import styles from './Favorites.module.css'
 
 export const Favorites: FC = () => {
   const { pokemons, hasError, mutate } = useFavorites()
@@ -46,29 +47,17 @@ export const Favorites: FC = () => {
       />
 
       {pokemons && pokemons.length > 0 && (
-        <div style={{ textAlign: 'center', margin: '24px 0' }}>
+        <div className={styles.analyzeSection}>
           <button
             onClick={handleAnalyzeTeam}
             disabled={!canAnalyze}
-            style={{
-              padding: '12px 24px',
-              backgroundColor: canAnalyze ? '#3B82F6' : '#9CA3AF',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '16px',
-              fontWeight: '600',
-              cursor: canAnalyze ? 'pointer' : 'not-allowed',
-              transition: 'background-color 0.2s ease',
-            }}
+            className={styles.analyzeButton}
           >
             {showAnalysis ? 'Ocultar Análisis' : 'Analizar Equipo'}
           </button>
 
           {analysisError && (
-            <p style={{ color: '#EF4444', marginTop: '8px', fontSize: '14px' }}>
-              {analysisError}
-            </p>
+            <p className={styles.errorMessage}>{analysisError}</p>
           )}
         </div>
       )}

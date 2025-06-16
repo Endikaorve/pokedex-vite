@@ -1,9 +1,34 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.analyzeSection {
+  text-align: center;
+  margin: 24px 0;
+}
 
-  padding: 16px;
+.analyzeButton {
+  padding: 12px 24px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
 
-  scrollbar-gutter: stable both-edges;
+.analyzeButton:enabled {
+  background-color: #3b82f6;
+  cursor: pointer;
+}
+
+.analyzeButton:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.analyzeButton:enabled:hover {
+  background-color: #2563eb;
+}
+
+.errorMessage {
+  color: #ef4444;
+  margin-top: 8px;
+  font-size: 14px;
 }
