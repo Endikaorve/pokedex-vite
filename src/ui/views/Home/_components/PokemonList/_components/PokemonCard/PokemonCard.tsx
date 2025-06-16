@@ -8,10 +8,9 @@ import { COLORS } from '@/ui/styles/utils/colors'
 
 import { PokemonType } from './_components/PokemonType'
 import { Link } from '@/ui/components/Link'
-
-// import classes from "./PokemonCard.module.css";
 import { PokemonStats } from './_components/PokemonStats/PokemonStats'
 import { Icon } from '@/ui/components/Icon/Icon'
+import classes from './PokemonCard.module.css'
 
 interface Props {
   pokemon: Pokemon
@@ -34,20 +33,20 @@ export const PokemonCard: FC<Props> = ({ pokemon, onFavoriteToggle }) => {
 
   return (
     <Link route={{ path: 'details', params: { id: pokemon.id } }}>
-      <article className="poke-card" style={style}>
-        <header className="poke-card-header">
-          <p className="poke-card-header-name">{pokemon.name}</p>
-          <p className="poke-card-header-code">{normalizedCode}</p>
+      <article className={classes.card} style={style}>
+        <header className={classes.header}>
+          <p className={classes.headerName}>{pokemon.name}</p>
+          <p className={classes.headerCode}>{normalizedCode}</p>
         </header>
-        <div className="poke-card-body">
+        <div className={classes.body}>
           <img
-            className="poke-card-body-pokemon-img"
+            className={classes.bodyPokemonImg}
             src={pokemon.images.main}
             alt="pokemon"
           />
-          <div className="poke-card-body-favorite-container">
+          <div className={classes.bodyFavoriteContainer}>
             <button
-              className="poke-card-body-favorite-button"
+              className={classes.bodyFavoriteButton}
               onClick={toggleFavorite}
             >
               {pokemon.isFavorite ? (
@@ -57,35 +56,35 @@ export const PokemonCard: FC<Props> = ({ pokemon, onFavoriteToggle }) => {
               )}
             </button>
           </div>
-          <div className="poke-card-body-types">
+          <div className={classes.bodyTypes}>
             {pokemon.types.map((type) => (
               <PokemonType key={type} type={type} />
             ))}
           </div>
-          <div className="poke-card-body-about">About</div>
-          <div className="poke-card-body-details">
-            <div className="poke-card-body-details-content">
-              <div className="poke-card-body-details-content-data">
+          <div className={classes.bodyAbout}>About</div>
+          <div className={classes.bodyDetails}>
+            <div className={classes.bodyDetailsContent}>
+              <div className={classes.bodyDetailsContentData}>
                 <img
-                  className="poke-card-body-details-content-data-img"
+                  className={classes.bodyDetailsContentDataImg}
                   src={weight}
                   alt="weight-icon"
                 />
                 {pokemon.weight} kg
               </div>
-              <div className="poke-card-body-details-content-title">Weight</div>
+              <div className={classes.bodyDetailsContentTitle}>Weight</div>
             </div>
 
-            <div className="poke-card-body-details-content">
-              <div className="poke-card-body-details-content-data">
+            <div className={classes.bodyDetailsContent}>
+              <div className={classes.bodyDetailsContentData}>
                 <img
-                  className="poke-card-body-details-content-data-img"
+                  className={classes.bodyDetailsContentDataImg}
                   src={height}
                   alt="height-icon"
                 />
                 {pokemon.height} m
               </div>
-              <div className="poke-card-body-details-content-title">Height</div>
+              <div className={classes.bodyDetailsContentTitle}>Height</div>
             </div>
           </div>
           <PokemonStats stats={pokemon.stats} />

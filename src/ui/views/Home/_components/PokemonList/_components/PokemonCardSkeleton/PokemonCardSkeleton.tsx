@@ -1,22 +1,23 @@
 import { FC } from 'react'
+import classes from '../PokemonCard/PokemonCard.module.css'
 
 export const PokemonCardSkeleton: FC = () => (
-  <div className="poke-card-skeleton">
-    <div className="poke-card-skeleton-header">
-      <div className="poke-card-skeleton-header-name" />
-      <div className="poke-card-skeleton-header-code" />
+  <div className={classes.cardSkeleton}>
+    <div className={classes.cardSkeletonHeader}>
+      <div className={classes.cardSkeletonHeaderName} />
+      <div className={classes.cardSkeletonHeaderCode} />
     </div>
-    <div className="poke-card-skeleton-body">
-      <div className="poke-card-skeleton-body-pokemon-img" />
-      <div className="poke-card-skeleton-body-types">
+    <div className={classes.cardSkeletonBody}>
+      <div className={classes.cardSkeletonBodyPokemonImg} />
+      <div className={classes.cardSkeletonBodyTypes}>
         {Array.from(Array(2).keys()).map((index) => (
-          <span key={index} className="poke-card-skeleton-body-type-badge" />
+          <span key={index} className={classes.cardSkeletonBodyTypeBadge} />
         ))}
       </div>
-      <div className="poke-card-skeleton-body-details">
-        <div className="poke-card-skeleton-body-details-content" />
+      <div className={classes.cardSkeletonBodyDetails}>
+        <div className={classes.cardSkeletonBodyDetailsContent} />
       </div>
-      <div className="poke-card-skeleton-body-description" />
+      <div className={classes.cardSkeletonBodyDescription} />
     </div>
   </div>
 )
