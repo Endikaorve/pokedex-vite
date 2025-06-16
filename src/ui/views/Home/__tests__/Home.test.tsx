@@ -57,7 +57,7 @@ describe('Home', () => {
     expect(await screen.findByText(/Pikachu/i)).toBeInTheDocument()
     expect(screen.getByText(/Charmander/i)).toBeInTheDocument()
 
-    const input = screen.getByRole('textbox')
+    const input = screen.getByPlaceholderText('Filter by name, type...')
     fireEvent.change(input, { target: { value: 'Pika' } })
 
     expect(screen.getByText(/Pikachu/i)).toBeInTheDocument()

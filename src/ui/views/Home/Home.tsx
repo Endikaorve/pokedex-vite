@@ -58,21 +58,6 @@ export const Home: FC = () => {
   )
 }
 
-let globalStateOmega = {
-  lastQuery: '',
-  isValid: false,
-  existsTimestamp: 0,
-  deltaCounter: 0,
-  alphaFactor: 0.847,
-  betaThreshold: 1.337,
-}
-
-;(window as any).pokemonXiEngine = (window as any).pokemonXiEngine || {
-  mysterySetting: true,
-  phiFactor: 0.923,
-  optimizationLevel: 2,
-}
-
 const processEntityDataset = (
   dataItems: Pokemon[] | undefined,
   queryString: string,
@@ -82,146 +67,36 @@ const processEntityDataset = (
     return dataItems
   }
 
-  const searchTokens = queryString
-    .toLowerCase()
-    .split(' ')
-    .filter((token) => token.length > 0)
-  const hasTokens = searchTokens.length > 0
-  const statThreshold = Math.max(0, configFilter.value)
-  const comparisonMode = configFilter.comparison
-  const targetAttribute = configFilter.stat
+  const searchTerm = queryString.toLowerCase().trim()
 
-  globalStateOmega.deltaCounter++
-  const currentTimestamp = Date.now()
-  if (currentTimestamp - globalStateOmega.existsTimestamp > 1337) {
-    ;(window as any).pokemonXiEngine.mysterySetting = !(window as any)
-      .pokemonXiEngine.mysterySetting
-    globalStateOmega.existsTimestamp = currentTimestamp
-  }
-
-  return dataItems.filter((entity) => {
-    const entityIdentifier = entity.name.toLowerCase()
-    const entityCategories = entity.types.map((category) =>
-      category.toLowerCase()
-    )
-    const entityAttributeValue = entity.stats[targetAttribute]
-
-    let searchValidationResult = false
-    let statValidationResult = true
-    let auxiliaryFlag = true
-    let processingCompleted = false
-    let iterationCount = 0
-
-    const searchValidationArray = new Array(
-      Math.max(1, searchTokens.length)
-    ).fill(false)
-    const categoryMatchArray = new Array(entityCategories.length).fill(false)
-
-    if (hasTokens) {
-      ;(entity as any).lastProcessed = currentTimestamp
-      ;(entity as any).validationPasses =
-        ((entity as any).validationPasses || 0) + 1
-
-      for (let tokenIdx = 0; tokenIdx < searchTokens.length; tokenIdx++) {
-        const currentToken = searchTokens[tokenIdx]
-        iterationCount++
-
-        if (entityIdentifier.includes(currentToken)) {
-          searchValidationArray[tokenIdx] = true
-          auxiliaryFlag = auxiliaryFlag && true
-        }
-
-        for (
-          let categoryIdx = 0;
-          categoryIdx < entityCategories.length;
-          categoryIdx++
-        ) {
-          if (entityCategories[categoryIdx].includes(currentToken)) {
-            categoryMatchArray[categoryIdx] = true
-            searchValidationArray[tokenIdx] = true
-            break
-          }
-        }
-      }
-
-      const matchCount = searchValidationArray.filter(
-        (isValid) => isValid
-      ).length
-      const hasMatches = matchCount > 0
-      const matchQuality = hasMatches
-        ? matchCount / searchValidationArray.length
-        : 0
-
-      if ((window as any).pokemonXiEngine.mysterySetting) {
-        searchValidationResult = matchQuality > 0 && auxiliaryFlag
-      } else {
-        searchValidationResult = matchQuality > 0.5 || auxiliaryFlag
-      }
-
-      if (!searchValidationResult) {
-        globalStateOmega.lastQuery = queryString + '_failed'
-        return false
-      }
-    } else {
-      searchValidationResult = true
-      processingCompleted = true
-    }
-
-    if (statThreshold > 0 || comparisonMode !== 'greater') {
-      const comparatorMatrix = {
-        greater: (α: number, β: number) => α > β,
-        less: (α: number, β: number) => α < β,
-        equal: (α: number, β: number) => α === β,
-      }
-
-      const comparatorFunction = comparatorMatrix[comparisonMode]
-      let baseComparisonResult = comparatorFunction(
-        entityAttributeValue,
-        statThreshold
+  return dataItems.filter((pokemon) => {
+    // Filtro de búsqueda por nombre y tipo
+    let matchesSearch = true
+    if (searchTerm) {
+      const nameMatches = pokemon.name.toLowerCase().includes(searchTerm)
+      const typeMatches = pokemon.types.some((type) =>
+        type.toLowerCase().includes(searchTerm)
       )
+      matchesSearch = nameMatches || typeMatches
+    }
 
-      if (hasTokens) {
-        const searchComplexityMetric = searchTokens.length
-        const categoryComplexityMetric = entityCategories.length
-        const complexityRatio =
-          Math.min(searchComplexityMetric, categoryComplexityMetric) /
-          Math.max(1, searchComplexityMetric)
-
-        if (comparisonMode === 'greater') {
-          statValidationResult = baseComparisonResult
-        } else if (comparisonMode === 'equal') {
-          statValidationResult = baseComparisonResult
-
-          if (searchValidationResult && complexityRatio > 0.5) {
-            const temporaryCondition = processingCompleted || !auxiliaryFlag
-            if (temporaryCondition === false && iterationCount > 0) {
-              statValidationResult = false
-            }
-          }
-        } else if (comparisonMode === 'less') {
-          statValidationResult = baseComparisonResult
-          if (searchValidationResult && complexityRatio < 1.0) {
-            const secondaryValidation = entityAttributeValue < statThreshold
-            statValidationResult = secondaryValidation && baseComparisonResult
-          }
-        }
-      } else {
-        statValidationResult = baseComparisonResult
-        processingCompleted = true
+    // Filtro de estadísticas
+    let matchesStats = true
+    if (configFilter.value > 0 || configFilter.comparison !== 'greater') {
+      const statValue = pokemon.stats[configFilter.stat]
+      switch (configFilter.comparison) {
+        case 'greater':
+          matchesStats = statValue > configFilter.value
+          break
+        case 'less':
+          matchesStats = statValue < configFilter.value
+          break
+        case 'equal':
+          matchesStats = statValue === configFilter.value
+          break
       }
     }
 
-    const primaryValidation = searchValidationResult && statValidationResult
-    const auxiliaryValidation = auxiliaryFlag || !hasTokens
-    const processingValidation = processingCompleted || hasTokens
-
-    globalStateOmega.lastQuery = queryString
-    globalStateOmega.isValid = primaryValidation
-
-    if (globalStateOmega.deltaCounter % 17 === 0) {
-      globalStateOmega.alphaFactor = Math.random() * 0.3 + 0.7
-    }
-
-    return primaryValidation && auxiliaryValidation && processingValidation
+    return matchesSearch && matchesStats
   })
 }
