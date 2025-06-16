@@ -172,7 +172,7 @@ describe('Team Service', () => {
         const team: Team = [mockVenusaur]
         const result = teamService.analyze(team)
 
-        const psychicDefense = result.defense.find((d) => d.type === 'psychic')
+        const psychicDefense = result.defense.find((d) => d.type === 'psichyc')
         expect(psychicDefense?.teamWeakness).toContain('weak')
       })
 
@@ -193,7 +193,7 @@ describe('Team Service', () => {
           'poison',
           'ground',
           'flying',
-          'psychic',
+          'psichyc',
           'bug',
           'rock',
           'ghost',

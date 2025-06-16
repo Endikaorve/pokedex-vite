@@ -19,8 +19,8 @@ describe('PokemonType', () => {
         expect(getTypeEffectiveness('fighting', 'normal')).toBe(2)
       })
 
-      it('should return 2 for psychic vs poison', () => {
-        expect(getTypeEffectiveness('psychic', 'poison')).toBe(2)
+      it('should return 2 for psichyc vs poison', () => {
+        expect(getTypeEffectiveness('psichyc', 'poison')).toBe(2)
       })
     })
 
@@ -49,8 +49,8 @@ describe('PokemonType', () => {
         expect(getTypeEffectiveness('fire', 'fire')).toBe(0.5)
       })
 
-      it('should return 0.5 for psychic vs psychic', () => {
-        expect(getTypeEffectiveness('psychic', 'psychic')).toBe(0.5)
+      it('should return 0.5 for psichyc vs psichyc', () => {
+        expect(getTypeEffectiveness('psichyc', 'psichyc')).toBe(0.5)
       })
     })
 
@@ -123,7 +123,7 @@ describe('PokemonType', () => {
           'ice',
           'normal',
           'poison',
-          'psychic',
+          'psichyc',
           'rock',
           'steel',
           'water',
