@@ -13,7 +13,7 @@ export const buildPokemon = (
   weight: pokemonDTO.weight / 10,
   types: pokemonDTO.types.map(
     ({ type }) =>
-      (type.name === 'psychic' ? 'psichyc' : type.name) as PokemonType
+      (type.name === 'psychic' ? 'psychyc' : type.name) as PokemonType
   ),
   images: {
     main: pokemonDTO.sprites.other['official-artwork'].front_default,

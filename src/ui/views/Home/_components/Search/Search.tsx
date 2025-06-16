@@ -110,9 +110,10 @@ export const Search: FC<Props> = ({
           value={statFilter.value}
           placeholder="Valor"
           onChange={({ target }) => {
+            const numValue = Number(target.value)
             onStatFilterChange({
               ...statFilter,
-              value: parseInt(target.value) || 0,
+              value: isNaN(numValue) ? 0 : numValue,
             })
           }}
         />
