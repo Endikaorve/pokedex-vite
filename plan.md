@@ -9,37 +9,38 @@
 
 ## 2. Estructura de archivos a crear (Core)
 
-### 2.1 Dominio Team
+### 2.1 Dominios Pokemon y Team
 
 ```
 src/
   core/
+    Pokemon/
+      domain/
+        Pokemon.ts                       # Modelos existentes
+        PokemonType.ts                   # Tipos y función getTypeEffectiveness
+        __tests__/
+          PokemonType.test.ts            # Tests del chart de tipos
+      # ... resto de archivos existentes
     Team/
       domain/
         Team.ts                          # Modelos del dominio Team
-        TypeEffectiveness.ts             # Chart de efectividad de tipos
         TeamRepository.ts                # Interface del repositorio
         __builders__/
           Team.builder.ts                # Builder para tests
       services/
         Team.service.ts                  # Servicio principal con analyze()
+        __tests__/
+          Team.service.test.ts           # Tests TDD del servicio
       _di/
         index.ts                         # Inyección de dependencias
-  test/
-    core/
-      Team/
-        services/
-          Team.service.test.ts           # Tests TDD del servicio
-        domain/
-          TypeEffectiveness.test.ts      # Tests del chart de tipos
 ```
 
 ## 3. Estrategia TDD
 
 ### 3.1 Orden de implementación TDD
 
-1. **TypeEffectiveness.test.ts** - Tests del chart de tipos
-2. **TypeEffectiveness.ts** - Implementación del chart
+1. **PokemonType.test.ts** - Tests del chart de tipos
+2. **PokemonType.ts** - Implementación del chart y getTypeEffectiveness
 3. **Team.service.test.ts** - Tests del servicio (casos de uso)
 4. **Team.ts** - Modelos del dominio
 5. **Team.service.ts** - Implementación del servicio
@@ -72,10 +73,28 @@ src/
 
 ## 4. Modelos del dominio
 
-### 4.1 Chart de efectividad (`TypeEffectiveness.ts`)
+### 4.1 Chart de efectividad (`PokemonType.ts`)
 
 ```typescript
-import { PokemonType } from '@/core/Pokemon/domain/Pokemon'
+export type PokemonType =
+  | 'bug'
+  | 'dark'
+  | 'dragon'
+  | 'electric'
+  | 'fairy'
+  | 'fighting'
+  | 'fire'
+  | 'flying'
+  | 'ghost'
+  | 'grass'
+  | 'ground'
+  | 'ice'
+  | 'normal'
+  | 'poison'
+  | 'psychic'
+  | 'rock'
+  | 'steel'
+  | 'water'
 
 export type TypeMultiplier = 0 | 0.25 | 0.5 | 1 | 2 | 4
 
@@ -83,12 +102,18 @@ export const TYPE_CHART: Record<
   PokemonType,
   Record<PokemonType, TypeMultiplier>
 >
+
+export const getTypeEffectiveness = (
+  attackingType: PokemonType,
+  defendingType: PokemonType
+): TypeMultiplier
 ```
 
 ### 4.2 Modelos del equipo (`Team.ts`)
 
 ```typescript
-import { Pokemon, PokemonType } from '@/core/Pokemon/domain/Pokemon'
+import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
+import { PokemonType } from '@/core/Pokemon/domain/PokemonType'
 
 export interface Team {
   pokemons: Pokemon[]
@@ -133,6 +158,9 @@ export type DefensiveStrength =
 ### 4.3 Servicio (`Team.service.ts`)
 
 ```typescript
+import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
+import { PokemonType } from '@/core/Pokemon/domain/PokemonType'
+
 export const teamService = {
   analyze: (pokemons: Pokemon[]): TeamAnalysisResult
   validateTeamSize: (pokemons: Pokemon[]): boolean
@@ -170,18 +198,20 @@ Para cada Pokémon y tipo defensor:
 ### Paso 1: Tests del chart de tipos
 
 ```typescript
-// TypeEffectiveness.test.ts
-describe('TypeEffectiveness', () => {
-  it('should return correct multiplier for fire vs water', () => {
-    expect(getTypeEffectiveness('fire', 'water')).toBe(0.5)
-  })
+// PokemonType.test.ts
+describe('PokemonType', () => {
+  describe('getTypeEffectiveness', () => {
+    it('should return correct multiplier for fire vs water', () => {
+      expect(getTypeEffectiveness('fire', 'water')).toBe(0.5)
+    })
 
-  it('should return correct multiplier for water vs fire', () => {
-    expect(getTypeEffectiveness('water', 'fire')).toBe(2)
-  })
+    it('should return correct multiplier for water vs fire', () => {
+      expect(getTypeEffectiveness('water', 'fire')).toBe(2)
+    })
 
-  it('should return immunity for normal vs ghost', () => {
-    expect(getTypeEffectiveness('normal', 'ghost')).toBe(0)
+    it('should return immunity for normal vs ghost', () => {
+      expect(getTypeEffectiveness('normal', 'ghost')).toBe(0)
+    })
   })
 })
 ```
@@ -229,7 +259,7 @@ describe('Team Service', () => {
 
 ## 8. Orden de implementación TDD
 
-1. **Tests de TypeEffectiveness** → Implementar chart completo
+1. **Tests de PokemonType** → Implementar chart completo y getTypeEffectiveness
 2. **Tests de Team.service validaciones** → Implementar validaciones
 3. **Tests de análisis defensivo** → Implementar lógica defensiva
 4. **Tests de análisis ofensivo** → Implementar lógica ofensiva
