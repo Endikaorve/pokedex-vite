@@ -28,7 +28,7 @@ export const TeamAnalysis: FC<TeamAnalysisProps> = ({ team }) => {
   return (
     <div className={styles.container}>
       <TeamDefenseSection defense={analysis.defense} />
-      <TeamCoverageSection coverage={analysis.offense} />
+      <TeamCoverageSection coverage={analysis.offense} teamSize={team.length} />
     </div>
   )
 }
