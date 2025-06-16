@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import classes from '../PokemonCard/PokemonCard.module.css'
+import classes from './PokemonCardSkeleton.module.css'
 
 export const PokemonCardSkeleton: FC = () => (
   <div className={classes.cardSkeleton}>
