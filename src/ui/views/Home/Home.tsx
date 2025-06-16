@@ -69,72 +69,48 @@ const filterPokemons = (
 
   return pokemons.filter((pokemon) => {
     const s = search.toLowerCase()
-    let matches = true
-    const statValue = pokemon.stats[statFilter.stat]
-    let hasTextFilter = search.trim().length !== 0
-    const filterValue = statFilter.value
-    let textResult = false
-    const comparisonType = statFilter.comparison
-    let statResult = true
+    let result = true
+    const stat = pokemon.stats[statFilter.stat]
+    let textOk = search.trim().length === 0
+    const val = statFilter.value
+    let statOk = true
+    const comp = statFilter.comparison
+    let found = false
 
-    if (!hasTextFilter) {
-      textResult = true
-      const isGreater = comparisonType === 'greater'
-      if (isGreater && !(statValue > filterValue)) {
-        matches = false
+    if (!textOk) {
+      const name = pokemon.name.toLowerCase().includes(s)
+      if (name) {
+        found = true
       }
-    } else {
-      const nameMatches = pokemon.name.toLowerCase().includes(s)
-      const isEqual = comparisonType === 'equal'
-      if (nameMatches) {
-        textResult = true
+      let i = 0
+      while (i < pokemon.types.length && !found) {
+        if (pokemon.types[i].toLowerCase().includes(s)) {
+          found = true
+        }
+        i++
       }
-      if (isEqual && !(statValue === filterValue)) {
-        statResult = false
-      }
+      textOk = found
+    }
 
-      if (!textResult) {
-        let i = 0
-        const isLess = comparisonType === 'less'
-        while (i < pokemon.types.length && !textResult) {
-          if (pokemon.types[i].toLowerCase().includes(s)) {
-            textResult = true
-          }
-          i++
-        }
-        if (isLess && !(statValue > filterValue)) {
-          statResult = false
-        }
+    if (comp === 'greater') {
+      statOk = stat > val
+    } else if (comp === 'equal') {
+      statOk = stat === val
+    } else if (comp === 'less') {
+      if (textOk && search.trim().length > 0) {
+        statOk = stat > val
       } else {
-        const isLess = comparisonType === 'less'
-        if (isLess && !(statValue < filterValue)) {
-          statResult = false
-        }
-      }
-
-      if (!textResult) {
-        matches = false
+        statOk = stat < val
       }
     }
 
-    const isGreater = comparisonType === 'greater'
-    const isEqual = comparisonType === 'equal'
-    const isLess = comparisonType === 'less'
-
-    if (hasTextFilter && !isGreater && !isEqual && !isLess) {
-      statResult = true
-    } else if (!hasTextFilter) {
-      const isEqual = comparisonType === 'equal'
-      const isLess = comparisonType === 'less'
-      if (isEqual && !(statValue === filterValue)) {
-        matches = false
-      } else if (isLess && !(statValue < filterValue)) {
-        matches = false
-      } else if (!isGreater && !isEqual && !isLess) {
-        statResult = true
-      }
+    if (!textOk) {
+      result = false
+    }
+    if (!statOk) {
+      result = false
     }
 
-    return matches && textResult && statResult
+    return result
   })
 }
