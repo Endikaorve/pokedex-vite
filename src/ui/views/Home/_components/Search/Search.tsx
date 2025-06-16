@@ -112,9 +112,7 @@ export const Search: FC<Props> = ({
         </select>
         <input
           className={styles.valueInput}
-          type="number"
-          min="0"
-          max="255"
+          type="text"
           value={statFilter.value}
           placeholder="Valor"
           onChange={({ target }) => {
