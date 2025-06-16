@@ -10,9 +10,9 @@ export const Details: FC = () => {
 
   if (id === undefined) {
     return (
-      <main>
+      <Main>
         <h1>El Pokémon no existe</h1>
-      </main>
+      </Main>
     )
   }
 
@@ -20,9 +20,9 @@ export const Details: FC = () => {
 
   if (hasError) {
     return (
-      <main>
+      <Main>
         <h1>Error al cargar el Pokémon</h1>
-      </main>
+      </Main>
     )
   }
 
@@ -30,9 +30,9 @@ export const Details: FC = () => {
 
   if (isLoading) {
     return (
-      <main>
+      <Main>
         <h1>Cargando...</h1>
-      </main>
+      </Main>
     )
   }
 

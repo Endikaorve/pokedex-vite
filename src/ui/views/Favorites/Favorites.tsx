@@ -20,9 +20,9 @@ export const Favorites: FC = () => {
 
   if (hasError) {
     return (
-      <main>
+      <Main>
         <h1>Error al cargar los Pokémons Favoritos</h1>
-      </main>
+      </Main>
     )
   }
 
