@@ -7,35 +7,15 @@ import {
 } from '../domain/Team'
 import {
   PokemonType,
+  POKEMON_TYPES,
   getTypeEffectiveness,
+  TypeMultiplier,
 } from '@/core/Pokemon/domain/PokemonType'
-
-// Todos los tipos de Pokémon
-const ALL_POKEMON_TYPES: PokemonType[] = [
-  'normal',
-  'fire',
-  'water',
-  'electric',
-  'grass',
-  'ice',
-  'fighting',
-  'poison',
-  'ground',
-  'flying',
-  'psychic',
-  'bug',
-  'rock',
-  'ghost',
-  'dragon',
-  'dark',
-  'steel',
-  'fairy',
-]
 
 /**
  * Convierte un multiplicador de efectividad a nivel de debilidad
  */
-const getWeaknessLevel = (multiplier: number): WeaknessLevel => {
+const getWeaknessLevel = (multiplier: TypeMultiplier): WeaknessLevel => {
   if (multiplier === 0) return 'immune'
   if (multiplier === 0.25) return 'very-resistant'
   if (multiplier === 0.5) return 'resistant'
@@ -53,7 +33,7 @@ const getWeaknessLevel = (multiplier: number): WeaknessLevel => {
 const calculatePokemonDefense = (
   attackingType: PokemonType,
   pokemonTypes: PokemonType[]
-): number => {
+): TypeMultiplier => {
   let multiplier = 1
 
   for (const defendingType of pokemonTypes) {
@@ -61,14 +41,14 @@ const calculatePokemonDefense = (
     multiplier *= effectiveness
   }
 
-  return multiplier
+  return multiplier as TypeMultiplier
 }
 
 /**
  * Calcula el análisis defensivo del equipo
  */
 const calculateTeamDefense = (team: Team): TeamDefenseAnalysis[] => {
-  return ALL_POKEMON_TYPES.map((attackingType) => {
+  return POKEMON_TYPES.map((attackingType) => {
     const teamWeakness: WeaknessLevel[] = team.map((pokemon) => {
       const multiplier = calculatePokemonDefense(attackingType, pokemon.types)
       return getWeaknessLevel(multiplier)
@@ -94,7 +74,7 @@ const calculateTeamCoverage = (team: Team): TeamCoverageAnalysis[] => {
   const uniqueTeamTypes = Array.from(teamTypes)
   const totalTeamTypes = uniqueTeamTypes.length
 
-  return ALL_POKEMON_TYPES.map((defendingType) => {
+  return POKEMON_TYPES.map((defendingType) => {
     // Contar cuántos tipos del equipo son súper efectivos contra este tipo
     const superEffectiveTypes = uniqueTeamTypes.filter((attackingType) => {
       const effectiveness = getTypeEffectiveness(attackingType, defendingType)
