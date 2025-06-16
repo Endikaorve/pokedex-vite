@@ -1,11 +1,10 @@
 import { FC } from 'react'
-import { TeamCoverageAnalysis } from '@/core/Team/domain/Team'
 import { TypeIcon } from '../TypeIcon'
 import { CoverageBar } from '../CoverageBar'
 import styles from './TeamCoverageSection.module.css'
 
 interface TeamCoverageSectionProps {
-  coverage: TeamCoverageAnalysis[]
+  coverage: any[]
 }
 
 export const TeamCoverageSection: FC<TeamCoverageSectionProps> = ({

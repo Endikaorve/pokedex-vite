@@ -1,12 +1,11 @@
 import { FC } from 'react'
-import { WeaknessLevel } from '@/core/Team/domain/Team'
 import styles from './DefenseBar.module.css'
 
 interface DefenseBarProps {
-  weaknesses: WeaknessLevel[]
+  weaknesses: any[]
 }
 
-const WEAKNESS_COLORS: Record<WeaknessLevel, string> = {
+const WEAKNESS_COLORS: Record<any, string> = {
   immune: '#1F2937',
   'very-resistant': '#008000',
   resistant: '#17c540',

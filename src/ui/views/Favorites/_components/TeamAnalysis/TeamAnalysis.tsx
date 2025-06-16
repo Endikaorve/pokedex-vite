@@ -1,18 +1,16 @@
 import { FC, useMemo } from 'react'
-import { Team } from '@/core/Team/domain/Team'
-import { teamService } from '@/core/Team/services/Team.service'
 import { TeamDefenseSection } from './_components/TeamDefenseSection'
 import { TeamCoverageSection } from './_components/TeamCoverageSection'
 import styles from './TeamAnalysis.module.css'
 
 interface TeamAnalysisProps {
-  team: Team
+  team: any // ## TODO: Add type
 }
 
 export const TeamAnalysis: FC<TeamAnalysisProps> = ({ team }) => {
-  const analysis = useMemo(() => {
+  const analysis: any = useMemo(() => {
     try {
-      return teamService.analyze(team)
+      return null // ## TODO: Implement team analysis
     } catch (error) {
       console.error('Error analyzing team:', error)
       return null
