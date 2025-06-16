@@ -99,57 +99,40 @@ export const getTypeEffectiveness = (
 import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
 import { PokemonType } from '@/core/Pokemon/domain/PokemonType'
 
-export interface Team {
-  pokemons: Pokemon[]
-}
+// ✅ Ya implementado
+export type Team = Pokemon[]
 
-export interface TeamAnalysisResult {
-  teamDefense: DefensiveAnalysis
-  coverage: OffensiveAnalysis
-}
-
-export interface DefensiveAnalysis {
-  typeResistances: Record<PokemonType, DefensiveTypeResult[]>
-}
-
-export interface OffensiveAnalysis {
-  typeCoverage: Record<PokemonType, OffensiveTypeResult[]>
-}
-
-export interface DefensiveTypeResult {
-  pokemonId: string
-  pokemonName: string
-  effectiveness: TypeMultiplier
-  effectivenessLevel: DefensiveStrength
-}
-
-export interface OffensiveTypeResult {
-  pokemonId: string
-  pokemonName: string
-  hasCoverage: boolean
-  coverageTypes: PokemonType[]
-}
-
-export type DefensiveStrength =
+export type WeaknessLevel =
   | 'immune'
   | 'very-resistant'
   | 'resistant'
   | 'neutral'
   | 'weak'
   | 'very-weak'
+
+export interface TeamDefenseAnalysis {
+  type: PokemonType
+  teamWeakness: WeaknessLevel[]
+}
+
+export interface TeamCoverageAnalysis {
+  type: PokemonType
+  coverage: number
+}
+
+export interface TeamAnalysis {
+  defense: TeamDefenseAnalysis[]
+  offense: TeamCoverageAnalysis[]
+}
 ```
 
 ### 4.3 Servicio (`Team.service.ts`)
 
 ```typescript
-import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
-import { PokemonType } from '@/core/Pokemon/domain/PokemonType'
+import { Team, TeamAnalysis } from '../domain/Team'
 
 export const teamService = {
-  analyze: (pokemons: Pokemon[]): TeamAnalysisResult
-  validateTeamSize: (pokemons: Pokemon[]): boolean
-  calculateDefensiveStrength: (pokemon: Pokemon, attackingType: PokemonType): DefensiveTypeResult
-  calculateOffensiveCoverage: (pokemon: Pokemon, defendingType: PokemonType): OffensiveTypeResult
+  analyze: (team: Team): TeamAnalysis
 }
 ```
 
@@ -157,25 +140,29 @@ export const teamService = {
 
 ### 5.1 Cálculo defensivo
 
-Para cada Pokémon y tipo atacante:
+Para cada tipo atacante contra el equipo:
 
-1. Obtener multiplicador del TYPE_CHART para cada tipo del Pokémon
-2. Si tiene 2 tipos, multiplicar ambos efectos (ej: 0.5 \* 0.5 = 0.25)
-3. Clasificar según DefensiveStrength:
-   - 0 = 'immune'
-   - 0.25 = 'very-resistant'
-   - 0.5 = 'resistant'
-   - 1 = 'neutral'
-   - 2 = 'weak'
-   - 4 = 'very-weak'
+1. Para cada Pokémon del equipo:
+   - Obtener multiplicador del TYPE_CHART para cada tipo del Pokémon
+   - Si tiene 2 tipos, multiplicar ambos efectos (ej: 0.5 \* 0.5 = 0.25)
+   - Clasificar según WeaknessLevel:
+     - 0 = 'immune'
+     - 0.25 = 'very-resistant'
+     - 0.5 = 'resistant'
+     - 1 = 'neutral'
+     - 2 = 'weak'
+     - 4 = 'very-weak'
+2. Crear TeamDefenseAnalysis con el tipo atacante y array de niveles de debilidad del equipo
 
 ### 5.2 Cálculo ofensivo
 
-Para cada Pokémon y tipo defensor:
+Para cada tipo defensor contra el equipo:
 
-1. Revisar si alguno de los tipos del Pokémon es súper efectivo (>1x) contra el tipo objetivo
-2. Almacenar qué tipos específicos proporcionan la cobertura
-3. Marcar `hasCoverage: true` si existe cobertura
+1. Calcular cobertura del equipo:
+   - Revisar todos los tipos de todos los Pokémon del equipo
+   - Contar cuántos tipos del equipo son súper efectivos (>1x) contra el tipo objetivo
+   - Calcular porcentaje de cobertura basado en el total de tipos únicos del equipo
+2. Crear TeamCoverageAnalysis con el tipo defensor y su valor de cobertura
 
 ## 6. Implementación paso a paso (TDD)
 
@@ -210,17 +197,17 @@ describe('Team Service', () => {
       const team = [waterPokemon, firePokemon]
       const result = teamService.analyze(team)
 
-      expect(result.teamDefense.typeResistances.grass).toHaveLength(2)
-      expect(
-        result.teamDefense.typeResistances.grass[0].effectivenessLevel
-      ).toBe('weak')
+      const grassDefense = result.defense.find((d) => d.type === 'grass')
+      expect(grassDefense?.teamWeakness).toHaveLength(2)
+      expect(grassDefense?.teamWeakness[0]).toBe('weak') // water vs grass
     })
 
     it('should calculate team coverage correctly', () => {
       const team = [waterPokemon] // Water attacks are super effective vs Fire
       const result = teamService.analyze(team)
 
-      expect(result.coverage.typeCoverage.fire[0].hasCoverage).toBe(true)
+      const fireCoverage = result.offense.find((o) => o.type === 'fire')
+      expect(fireCoverage?.coverage).toBeGreaterThan(0)
     })
   })
 })
