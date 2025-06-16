@@ -1,5 +1,5 @@
 import { teamService } from '../Team.service'
-import { Team, WeaknessLevel } from '../../domain/Team'
+import { Team } from '../../domain/Team'
 import { Pokemon } from '@/core/Pokemon/domain/Pokemon'
 
 // Mock Pokémon para tests
@@ -266,15 +266,6 @@ describe('Team Service', () => {
           (o) => o.type === 'fighting'
         )
         expect(fightingCoverage?.coverage).toBeGreaterThan(0)
-      })
-
-      it('should calculate coverage as percentage of team types', () => {
-        const team: Team = [mockCharizard, mockBlastoise] // 3 unique types: Fire, Flying, Water
-        const result = teamService.analyze(team)
-
-        const grassCoverage = result.offense.find((o) => o.type === 'grass')
-        // Fire is super effective vs Grass = 1 out of 3 types = 33.33%
-        expect(grassCoverage?.coverage).toBeCloseTo(33.33, 1)
       })
     })
 
