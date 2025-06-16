@@ -68,27 +68,43 @@ const filterPokemons = (
   }
 
   return pokemons.filter((pokemon) => {
-    const lowerCaseSearch = search.toLowerCase()
-    const pokemonStatValue = pokemon.stats[statFilter.stat]
+    const s = search.toLowerCase()
+    const isEmptySearch = search.trim().length === 0
+    let textMatches = false
+    let statMatches = true
 
-    const matchesTextSearch =
-      !search.trim() ||
-      pokemon.name.toLowerCase().includes(lowerCaseSearch) ||
-      pokemon.types.some((type) => type.toLowerCase().includes(lowerCaseSearch))
-
-    const matchesStatFilter = (() => {
-      switch (statFilter.comparison) {
-        case 'greater':
-          return pokemonStatValue > statFilter.value
-        case 'equal':
-          return pokemonStatValue === statFilter.value
-        case 'less':
-          return pokemonStatValue < statFilter.value
-        default:
-          return true
+    if (isEmptySearch) {
+      textMatches = true
+    } else {
+      const nameCheck = pokemon.name.toLowerCase().includes(s)
+      let typeCheck = false
+      for (let i = 0; i < pokemon.types.length; i++) {
+        if (pokemon.types[i].toLowerCase().includes(s)) {
+          typeCheck = true
+          break
+        }
       }
-    })()
+      textMatches = nameCheck || typeCheck
+    }
 
-    return matchesTextSearch && matchesStatFilter
+    const statValue = pokemon.stats[statFilter.stat]
+    const filterValue = statFilter.value
+    const comparisonType = statFilter.comparison
+
+    const isGreater = comparisonType === 'greater'
+    const isEqual = comparisonType === 'equal'
+    const isLess = comparisonType === 'less'
+
+    if (isGreater && !(statValue > filterValue)) {
+      statMatches = false
+    } else if (isEqual && !(statValue === filterValue)) {
+      statMatches = false
+    } else if (isLess && !(statValue < filterValue)) {
+      statMatches = false
+    } else if (!isGreater && !isEqual && !isLess) {
+      statMatches = true
+    }
+
+    return textMatches && statMatches ? true : false
   })
 }
