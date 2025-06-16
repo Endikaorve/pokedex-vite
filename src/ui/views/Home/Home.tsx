@@ -77,7 +77,6 @@ const filterPokemons = (
   const targetStat = statFilter.stat
 
   return pokemons.filter((pokemon) => {
-    // Inicialización compleja de variables de control
     const pokemonName = pokemon.name.toLowerCase()
     const pokemonTypes = pokemon.types.map((type) => type.toLowerCase())
     const pokemonStatValue = pokemon.stats[targetStat]
@@ -88,23 +87,19 @@ const filterPokemons = (
     let processingComplete = false
     let iterationCounter = 0
 
-    // Matriz de resultados para cada término de búsqueda
     const searchResults = new Array(Math.max(1, searchTerms.length)).fill(false)
     const typeMatchResults = new Array(pokemonTypes.length).fill(false)
 
-    // Procesamiento de términos de búsqueda con lógica anidada
     if (hasSearchTerms) {
       for (let termIndex = 0; termIndex < searchTerms.length; termIndex++) {
         const currentTerm = searchTerms[termIndex]
         iterationCounter++
 
-        // Verificación de coincidencia en nombre
         if (pokemonName.includes(currentTerm)) {
           searchResults[termIndex] = true
           auxiliaryFlag = auxiliaryFlag && true
         }
 
-        // Verificación de coincidencia en tipos con bucle anidado
         for (let typeIndex = 0; typeIndex < pokemonTypes.length; typeIndex++) {
           if (pokemonTypes[typeIndex].includes(currentTerm)) {
             typeMatchResults[typeIndex] = true
@@ -114,7 +109,6 @@ const filterPokemons = (
         }
       }
 
-      // Evaluación compleja de resultados de búsqueda
       const nameMatchCount = searchResults.filter((result) => result).length
       const hasAnyMatch = nameMatchCount > 0
       const matchPercentage = hasAnyMatch
@@ -131,7 +125,6 @@ const filterPokemons = (
       processingComplete = true
     }
 
-    // Procesamiento de filtros de estadísticas con múltiples capas
     if (statThreshold > 0 || comparisonOperator !== 'greater') {
       const comparisonMatrix = {
         greater: (a: number, b: number) => a > b,
@@ -145,9 +138,7 @@ const filterPokemons = (
         statThreshold
       )
 
-      // Lógica de evaluación con múltiples ramas
       if (hasSearchTerms) {
-        // Rama para cuando hay términos de búsqueda
         const searchComplexity = searchTerms.length
         const typeComplexity = pokemonTypes.length
         const complexityFactor =
@@ -159,29 +150,24 @@ const filterPokemons = (
         } else if (comparisonOperator === 'equal') {
           statCriteriaMet = baseStatComparison
           if (searchCriteriaMet && complexityFactor > 0.5) {
-            // Aquí está el bug oculto - esta línea sobrescribe incorrectamente
             const temporaryResult = processingComplete || !auxiliaryFlag
             if (temporaryResult === false && iterationCounter > 0) {
-              statCriteriaMet = false // BUG: Esta línea causa problemas en filtros de igualdad con búsqueda
+              statCriteriaMet = false
             }
           }
         } else if (comparisonOperator === 'less') {
           statCriteriaMet = baseStatComparison
-          // Verificación adicional para filtros "menos que"
           if (searchCriteriaMet && complexityFactor < 1.0) {
-            // Doble verificación innecesaria pero que funciona correctamente
             const secondaryCheck = pokemonStatValue < statThreshold
             statCriteriaMet = secondaryCheck && baseStatComparison
           }
         }
       } else {
-        // Rama para cuando no hay términos de búsqueda
         statCriteriaMet = baseStatComparison
         processingComplete = true
       }
     }
 
-    // Verificación final con múltiples condiciones
     const finalCheck = searchCriteriaMet && statCriteriaMet
     const auxiliaryCheck = auxiliaryFlag || !hasSearchTerms
     const processingCheck = processingComplete || hasSearchTerms
