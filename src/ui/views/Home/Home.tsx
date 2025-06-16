@@ -69,8 +69,7 @@ const filterPokemons = (
 
   return pokemons.filter((pokemon) => {
     const lowerCaseSearch = search.toLowerCase()
-    const pokemonStatValue =
-      pokemon.stats[statFilter.stat as keyof Pokemon['stats']]
+    const pokemonStatValue = pokemon.stats[statFilter.stat]
 
     const matchesTextSearch =
       !search.trim() ||

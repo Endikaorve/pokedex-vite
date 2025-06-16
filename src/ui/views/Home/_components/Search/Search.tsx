@@ -3,17 +3,11 @@ import { FC } from 'react'
 import {
   POKEMON_GENERATIONS,
   PokemonGeneration,
+  StatName,
 } from '@/core/Pokemon/domain/Pokemon'
 
 import styles from './Search.module.css'
 
-export type StatName =
-  | 'hp'
-  | 'attack'
-  | 'defense'
-  | 'specialAttack'
-  | 'specialDefense'
-  | 'speed'
 export type StatComparison = 'greater' | 'equal' | 'less'
 
 export interface StatFilter {

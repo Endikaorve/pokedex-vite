@@ -39,6 +39,8 @@ export interface Pokemon {
   isFavorite: boolean
 }
 
+export type StatName = keyof Pokemon['stats']
+
 export const POKEMON_GENERATIONS = [
   'Kanto',
   'Johto',
