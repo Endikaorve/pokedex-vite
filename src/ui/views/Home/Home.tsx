@@ -33,14 +33,7 @@ export const Home: FC = () => {
     )
   }
 
-  const filteredPokemons = pokemons?.filter((pokemon) => {
-    const lowerCaseSearch = search.toLowerCase()
-
-    return (
-      pokemon.name.toLowerCase().includes(lowerCaseSearch) ||
-      pokemon.types.some((type) => type.toLowerCase().includes(lowerCaseSearch))
-    )
-  })
+  const filteredPokemons = filterPokemons(pokemons, search)
 
   return (
     <main className={classes.container}>
@@ -55,5 +48,22 @@ export const Home: FC = () => {
         onFavoriteToggle={handleFavoriteToggle}
       />
     </main>
+  )
+}
+
+const filterPokemons = (
+  pokemons: Pokemon[] | undefined,
+  search: string
+): Pokemon[] | undefined => {
+  if (!pokemons) return pokemons
+
+  if (!search.trim()) return pokemons
+
+  const lowerCaseSearch = search.toLowerCase()
+
+  return pokemons.filter(
+    (pokemon) =>
+      pokemon.name.toLowerCase().includes(lowerCaseSearch) ||
+      pokemon.types.some((type) => type.toLowerCase().includes(lowerCaseSearch))
   )
 }
