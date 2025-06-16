@@ -3,7 +3,7 @@ import { FC, useState } from 'react'
 import { Pokemon, PokemonGeneration } from '@/core/Pokemon/domain/Pokemon'
 
 import { PokemonList } from './_components/PokemonList'
-import { Search } from './_components/Search'
+import { Search, StatFilter } from './_components/Search'
 import classes from './Home.module.css'
 import { usePokemons } from './_hooks/usePokemons'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
@@ -11,6 +11,11 @@ import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
 export const Home: FC = () => {
   const [generation, setGeneration] = useState<PokemonGeneration>('Kanto')
   const [search, setSearch] = useState<string>('')
+  const [statFilter, setStatFilter] = useState<StatFilter>({
+    stat: 'hp',
+    comparison: 'greater',
+    value: 0,
+  })
   const { pokemons, hasError, mutate } = usePokemons(generation)
 
   const handleFavoriteToggle = (pokemon: Pokemon) => {
@@ -33,15 +38,17 @@ export const Home: FC = () => {
     )
   }
 
-  const filteredPokemons = filterPokemons(pokemons, search)
+  const filteredPokemons = filterPokemons(pokemons, search, statFilter)
 
   return (
     <main className={classes.container}>
       <Search
         generation={generation}
         search={search}
+        statFilter={statFilter}
         onGenerationChange={setGeneration}
         onSearchChange={setSearch}
+        onStatFilterChange={setStatFilter}
       />
       <PokemonList
         pokemons={filteredPokemons}
@@ -53,17 +60,43 @@ export const Home: FC = () => {
 
 const filterPokemons = (
   pokemons: Pokemon[] | undefined,
-  search: string
+  search: string,
+  statFilter: StatFilter
 ): Pokemon[] | undefined => {
   if (!pokemons) return pokemons
 
-  if (!search.trim()) return pokemons
+  let filtered = pokemons
 
-  const lowerCaseSearch = search.toLowerCase()
+  // Filtro por búsqueda de texto
+  if (search.trim()) {
+    const lowerCaseSearch = search.toLowerCase()
+    filtered = filtered.filter(
+      (pokemon) =>
+        pokemon.name.toLowerCase().includes(lowerCaseSearch) ||
+        pokemon.types.some((type) =>
+          type.toLowerCase().includes(lowerCaseSearch)
+        )
+    )
+  }
 
-  return pokemons.filter(
-    (pokemon) =>
-      pokemon.name.toLowerCase().includes(lowerCaseSearch) ||
-      pokemon.types.some((type) => type.toLowerCase().includes(lowerCaseSearch))
-  )
+  // Filtro por estadísticas
+  if (statFilter.value > 0) {
+    filtered = filtered.filter((pokemon) => {
+      const pokemonStatValue =
+        pokemon.stats[statFilter.stat as keyof Pokemon['stats']]
+
+      switch (statFilter.comparison) {
+        case 'greater':
+          return pokemonStatValue > statFilter.value
+        case 'equal':
+          return pokemonStatValue === statFilter.value
+        case 'less':
+          return pokemonStatValue < statFilter.value
+        default:
+          return true
+      }
+    })
+  }
+
+  return filtered
 }

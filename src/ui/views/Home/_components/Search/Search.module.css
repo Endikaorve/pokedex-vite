@@ -24,3 +24,27 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+.statFilter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.statSelect,
+.comparisonSelect {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  background-color: white;
+  min-width: 80px;
+}
+
+.valueInput {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 80px;
+}
