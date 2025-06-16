@@ -12,12 +12,12 @@ export const pokemonBuilder = (options?: Partial<Pokemon>) => {
       alt: 'irrelevantAltImage',
     },
     stats: {
-      hp: 0,
-      attack: 0,
-      defense: 0,
-      specialAttack: 0,
-      specialDefense: 0,
-      speed: 0,
+      hp: 100,
+      attack: 100,
+      defense: 100,
+      specialAttack: 100,
+      specialDefense: 100,
+      speed: 100,
     },
     isFavorite: false,
   }
