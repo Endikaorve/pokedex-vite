@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { TeamDefenseAnalysis } from '@/core/Team/domain/Team'
-import { TypeIcon } from './TypeIcon'
-import { DefenseBar } from './DefenseBar'
+import { TypeIcon } from '../TypeIcon'
+import { DefenseBar } from '../DefenseBar'
 import styles from './TeamDefenseSection.module.css'
 
 interface TeamDefenseSectionProps {

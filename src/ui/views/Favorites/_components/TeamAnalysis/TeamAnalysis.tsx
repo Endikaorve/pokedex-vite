@@ -1,8 +1,8 @@
 import { FC, useMemo } from 'react'
 import { Team } from '@/core/Team/domain/Team'
 import { teamService } from '@/core/Team/services/Team.service'
-import { TeamDefenseSection } from './TeamDefenseSection'
-import { TeamCoverageSection } from './TeamCoverageSection'
+import { TeamDefenseSection } from './_components/TeamDefenseSection'
+import { TeamCoverageSection } from './_components/TeamCoverageSection'
 import styles from './TeamAnalysis.module.css'
 
 interface TeamAnalysisProps {
