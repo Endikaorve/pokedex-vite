@@ -38,7 +38,7 @@ export const Home: FC = () => {
     )
   }
 
-  const filteredPokemons = processEntityDataset(pokemons, search, statFilter)
+  const filteredPokemons = filterPokemons(pokemons, search, statFilter)
 
   return (
     <Main>
@@ -58,45 +58,83 @@ export const Home: FC = () => {
   )
 }
 
-const processEntityDataset = (
-  dataItems: Pokemon[] | undefined,
-  queryString: string,
-  configFilter: StatFilter
+const filterPokemons = (
+  pokemons: Pokemon[] | undefined,
+  search: string,
+  statFilter: StatFilter
 ): Pokemon[] | undefined => {
-  if (!dataItems) {
-    return dataItems
+  if (!pokemons) {
+    return pokemons
   }
 
-  const searchTerm = queryString.toLowerCase().trim()
+  return pokemons.filter((pokemon) => {
+    const s = search.toLowerCase()
+    let matches = true
+    const statValue = pokemon.stats[statFilter.stat]
+    let hasTextFilter = search.trim().length !== 0
+    const filterValue = statFilter.value
+    let textResult = false
+    const comparisonType = statFilter.comparison
+    let statResult = true
 
-  return dataItems.filter((pokemon) => {
-    // Filtro de búsqueda por nombre y tipo
-    let matchesSearch = true
-    if (searchTerm) {
-      const nameMatches = pokemon.name.toLowerCase().includes(searchTerm)
-      const typeMatches = pokemon.types.some((type) =>
-        type.toLowerCase().includes(searchTerm)
-      )
-      matchesSearch = nameMatches || typeMatches
-    }
+    if (!hasTextFilter) {
+      textResult = true
+      const isGreater = comparisonType === 'greater'
+      if (isGreater && !(statValue > filterValue)) {
+        matches = false
+      }
+    } else {
+      const nameMatches = pokemon.name.toLowerCase().includes(s)
+      const isEqual = comparisonType === 'equal'
+      if (nameMatches) {
+        textResult = true
+      }
+      if (isEqual && !(statValue === filterValue)) {
+        statResult = false
+      }
 
-    // Filtro de estadísticas
-    let matchesStats = true
-    if (configFilter.value > 0 || configFilter.comparison !== 'greater') {
-      const statValue = pokemon.stats[configFilter.stat]
-      switch (configFilter.comparison) {
-        case 'greater':
-          matchesStats = statValue > configFilter.value
-          break
-        case 'less':
-          matchesStats = statValue < configFilter.value
-          break
-        case 'equal':
-          matchesStats = statValue === configFilter.value
-          break
+      if (!textResult) {
+        let i = 0
+        const isLess = comparisonType === 'less'
+        while (i < pokemon.types.length && !textResult) {
+          if (pokemon.types[i].toLowerCase().includes(s)) {
+            textResult = true
+          }
+          i++
+        }
+        if (isLess && !(statValue > filterValue)) {
+          statResult = false
+        }
+      } else {
+        const isLess = comparisonType === 'less'
+        if (isLess && !(statValue < filterValue)) {
+          statResult = false
+        }
+      }
+
+      if (!textResult) {
+        matches = false
       }
     }
 
-    return matchesSearch && matchesStats
+    const isGreater = comparisonType === 'greater'
+    const isEqual = comparisonType === 'equal'
+    const isLess = comparisonType === 'less'
+
+    if (hasTextFilter && !isGreater && !isEqual && !isLess) {
+      statResult = true
+    } else if (!hasTextFilter) {
+      const isEqual = comparisonType === 'equal'
+      const isLess = comparisonType === 'less'
+      if (isEqual && !(statValue === filterValue)) {
+        matches = false
+      } else if (isLess && !(statValue < filterValue)) {
+        matches = false
+      } else if (!isGreater && !isEqual && !isLess) {
+        statResult = true
+      }
+    }
+
+    return matches && textResult && statResult
   })
 }

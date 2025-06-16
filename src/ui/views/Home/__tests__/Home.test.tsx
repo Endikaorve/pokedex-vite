@@ -1,6 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { Home } from '../Home'
-// import { describe, expect, it } from 'vitest'
 import { render, serviceMockBuilder } from '@/test/utils'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
 import { pokemonBuilder } from '@/core/Pokemon/domain/__builders__/Pokemon.builder'
@@ -12,10 +11,26 @@ describe('Home', () => {
         pokemonBuilder({
           id: '1',
           name: 'Pikachu',
+          stats: {
+            hp: 100,
+            attack: 100,
+            defense: 100,
+            specialAttack: 100,
+            specialDefense: 100,
+            speed: 100,
+          },
         }).build(),
         pokemonBuilder({
           id: '2',
           name: 'Charmander',
+          stats: {
+            hp: 100,
+            attack: 100,
+            defense: 100,
+            specialAttack: 100,
+            specialDefense: 100,
+            speed: 100,
+          },
         }).build(),
       ])
       .build()
@@ -44,10 +59,26 @@ describe('Home', () => {
         pokemonBuilder({
           id: '1',
           name: 'Pikachu',
+          stats: {
+            hp: 100,
+            attack: 100,
+            defense: 100,
+            specialAttack: 100,
+            specialDefense: 100,
+            speed: 100,
+          },
         }).build(),
         pokemonBuilder({
           id: '2',
           name: 'Charmander',
+          stats: {
+            hp: 100,
+            attack: 100,
+            defense: 100,
+            specialAttack: 100,
+            specialDefense: 100,
+            speed: 100,
+          },
         }).build(),
       ])
       .build()
