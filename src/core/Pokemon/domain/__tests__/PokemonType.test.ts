@@ -38,7 +38,7 @@ describe('PokemonType', () => {
         'ice',
         'normal',
         'poison',
-        'psychyc',
+        'psichyc',
         'rock',
         'steel',
         'water',

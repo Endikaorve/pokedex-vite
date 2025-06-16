@@ -17,7 +17,7 @@ import ground from '@/ui/assets/types/ground.svg'
 import ice from '@/ui/assets/types/ice.svg'
 import normal from '@/ui/assets/types/normal.svg'
 import poison from '@/ui/assets/types/poison.svg'
-import psychyc from '@/ui/assets/types/psychic.svg'
+import psichyc from '@/ui/assets/types/psychic.svg'
 import rock from '@/ui/assets/types/rock.svg'
 import steel from '@/ui/assets/types/steel.svg'
 import water from '@/ui/assets/types/water.svg'
@@ -41,7 +41,7 @@ const TYPE_IMAGES: Record<PokemonType, string> = {
   ice,
   normal,
   poison,
-  psychyc,
+  psichyc,
   rock,
   steel,
   water,

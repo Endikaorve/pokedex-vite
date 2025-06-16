@@ -17,7 +17,7 @@ export const COLORS = {
   ice: createCSSVariable('ice'),
   normal: createCSSVariable('normal'),
   poison: createCSSVariable('poison'),
-  psychyc: createCSSVariable('psychyc'),
+  psichyc: createCSSVariable('psichyc'),
   rock: createCSSVariable('rock'),
   steel: createCSSVariable('steel'),
   water: createCSSVariable('water'),
