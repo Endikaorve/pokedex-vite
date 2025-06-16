@@ -102,7 +102,7 @@ const filterPokemons = (
           }
           i++
         }
-        if (isLess && !(statValue < filterValue)) {
+        if (isLess && !(statValue > filterValue)) {
           statResult = false
         }
       } else {
