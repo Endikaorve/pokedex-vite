@@ -227,7 +227,7 @@ describe('Team Service', () => {
         const result = teamService.analyze(team)
 
         const fireCoverage = result.offense.find((o) => o.type === 'fire')
-        expect(fireCoverage?.coverage).toBeGreaterThan(0) // Water is super effective vs Fire
+        expect(fireCoverage?.coverage).toBe(1) // 1 Pokémon (Blastoise) is super effective vs Fire
       })
 
       it('should detect no offensive coverage against type', () => {
@@ -235,7 +235,7 @@ describe('Team Service', () => {
         const result = teamService.analyze(team)
 
         const waterCoverage = result.offense.find((o) => o.type === 'water')
-        expect(waterCoverage?.coverage).toBe(0) // Water is not very effective vs Water
+        expect(waterCoverage?.coverage).toBe(0) // No Pokémon is super effective vs Water
       })
 
       it('should analyze full team offensive coverage', () => {
@@ -244,28 +244,38 @@ describe('Team Service', () => {
 
         expect(result.offense).toHaveLength(18)
 
-        // Fire coverage should be high (Water from Blastoise)
         const fireCoverage = result.offense.find((o) => o.type === 'fire')
-        expect(fireCoverage?.coverage).toBeGreaterThan(0)
+        expect(fireCoverage?.coverage).toBe(1)
 
-        // Water coverage should be high (Grass from Venusaur)
         const waterCoverage = result.offense.find((o) => o.type === 'water')
-        expect(waterCoverage?.coverage).toBeGreaterThan(0)
+        expect(waterCoverage?.coverage).toBe(1)
       })
 
       it('should handle dual-type attacking pokemon', () => {
         const team: Team = [mockCharizard] // Fire/Flying
         const result = teamService.analyze(team)
 
-        // Fire attacks are super effective vs Grass
         const grassCoverage = result.offense.find((o) => o.type === 'grass')
-        expect(grassCoverage?.coverage).toBeGreaterThan(0)
+        expect(grassCoverage?.coverage).toBe(1)
 
-        // Flying attacks are super effective vs Fighting
         const fightingCoverage = result.offense.find(
           (o) => o.type === 'fighting'
         )
-        expect(fightingCoverage?.coverage).toBeGreaterThan(0)
+        expect(fightingCoverage?.coverage).toBe(1)
+      })
+
+      it('should count multiple pokemon with coverage against same type', () => {
+        const team: Team = [mockCharizard, mockVenusaur] // Fire/Flying + Grass/Poison
+        const result = teamService.analyze(team)
+
+        const grassCoverage = result.offense.find((o) => o.type === 'grass')
+        expect(grassCoverage?.coverage).toBe(2) // Both Pokémon are super effective vs Grass
+
+        const steelCoverage = result.offense.find((o) => o.type === 'steel')
+        expect(steelCoverage?.coverage).toBe(1)
+
+        const fireCoverage = result.offense.find((o) => o.type === 'fire')
+        expect(fireCoverage?.coverage).toBe(0)
       })
     })
 
@@ -297,7 +307,7 @@ describe('Team Service', () => {
           expect(offense.type).toBeDefined()
           expect(typeof offense.coverage).toBe('number')
           expect(offense.coverage).toBeGreaterThanOrEqual(0)
-          expect(offense.coverage).toBeLessThanOrEqual(100)
+          expect(offense.coverage).toBeLessThanOrEqual(3) // Max 3 Pokémon in this test
         })
       })
 

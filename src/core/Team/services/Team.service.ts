@@ -65,31 +65,18 @@ const calculateTeamDefense = (team: Team): TeamDefenseAnalysis[] => {
  * Calcula el análisis ofensivo del equipo
  */
 const calculateTeamCoverage = (team: Team): TeamCoverageAnalysis[] => {
-  // Obtener todos los tipos únicos del equipo
-  const teamTypes = new Set<PokemonType>()
-  team.forEach((pokemon) => {
-    pokemon.types.forEach((type) => teamTypes.add(type))
-  })
-
-  const uniqueTeamTypes = Array.from(teamTypes)
-  const totalTeamTypes = uniqueTeamTypes.length
-
   return POKEMON_TYPES.map((defendingType) => {
-    // Contar cuántos tipos del equipo son súper efectivos contra este tipo
-    const superEffectiveTypes = uniqueTeamTypes.filter((attackingType) => {
-      const effectiveness = getTypeEffectiveness(attackingType, defendingType)
-      return effectiveness > 1 // Súper efectivo
+    // Contar cuántos Pokémon del equipo tienen al menos un tipo súper efectivo contra este tipo
+    const pokemonWithCoverage = team.filter((pokemon) => {
+      return pokemon.types.some((attackingType) => {
+        const effectiveness = getTypeEffectiveness(attackingType, defendingType)
+        return effectiveness > 1 // Súper efectivo
+      })
     })
-
-    // Calcular cobertura como porcentaje
-    const coverage =
-      totalTeamTypes > 0
-        ? (superEffectiveTypes.length / totalTeamTypes) * 100
-        : 0
 
     return {
       type: defendingType,
-      coverage: Math.round(coverage * 100) / 100, // Redondear a 2 decimales
+      coverage: pokemonWithCoverage.length,
     }
   })
 }
