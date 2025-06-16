@@ -63,7 +63,9 @@ const filterPokemons = (
   search: string,
   statFilter: StatFilter
 ): Pokemon[] | undefined => {
-  if (!pokemons) return pokemons
+  if (!pokemons) {
+    return pokemons
+  }
 
   return pokemons.filter((pokemon) => {
     const lowerCaseSearch = search.toLowerCase()
@@ -75,20 +77,18 @@ const filterPokemons = (
       pokemon.name.toLowerCase().includes(lowerCaseSearch) ||
       pokemon.types.some((type) => type.toLowerCase().includes(lowerCaseSearch))
 
-    const matchesStatFilter =
-      statFilter.value <= 0 ||
-      (() => {
-        switch (statFilter.comparison) {
-          case 'greater':
-            return pokemonStatValue > statFilter.value
-          case 'equal':
-            return pokemonStatValue === statFilter.value
-          case 'less':
-            return pokemonStatValue < statFilter.value
-          default:
-            return true
-        }
-      })()
+    const matchesStatFilter = (() => {
+      switch (statFilter.comparison) {
+        case 'greater':
+          return pokemonStatValue > statFilter.value
+        case 'equal':
+          return pokemonStatValue === statFilter.value
+        case 'less':
+          return pokemonStatValue < statFilter.value
+        default:
+          return true
+      }
+    })()
 
     return matchesTextSearch && matchesStatFilter
   })
