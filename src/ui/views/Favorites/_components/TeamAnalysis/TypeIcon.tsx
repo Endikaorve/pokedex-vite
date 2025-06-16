@@ -1,61 +1,68 @@
-import { FC } from 'react'
+import { CSSProperties, FC } from 'react'
 import { PokemonType } from '@/core/Pokemon/domain/PokemonType'
+import { COLORS } from '@/ui/styles/utils/colors'
 import styles from './TypeIcon.module.css'
+
+import bug from '@/ui/assets/types/bug.svg'
+import dark from '@/ui/assets/types/dark.svg'
+import dragon from '@/ui/assets/types/dragon.svg'
+import electric from '@/ui/assets/types/electric.svg'
+import fairy from '@/ui/assets/types/fairy.svg'
+import fighting from '@/ui/assets/types/fighting.svg'
+import fire from '@/ui/assets/types/fire.svg'
+import flying from '@/ui/assets/types/flying.svg'
+import ghost from '@/ui/assets/types/ghost.svg'
+import grass from '@/ui/assets/types/grass.svg'
+import ground from '@/ui/assets/types/ground.svg'
+import ice from '@/ui/assets/types/ice.svg'
+import normal from '@/ui/assets/types/normal.svg'
+import poison from '@/ui/assets/types/poison.svg'
+import psychic from '@/ui/assets/types/psychic.svg'
+import rock from '@/ui/assets/types/rock.svg'
+import steel from '@/ui/assets/types/steel.svg'
+import water from '@/ui/assets/types/water.svg'
 
 interface TypeIconProps {
   type: PokemonType
 }
 
-const TYPE_COLORS: Record<PokemonType, string> = {
-  normal: '#A8A878',
-  fire: '#F08030',
-  water: '#6890F0',
-  electric: '#F8D030',
-  grass: '#78C850',
-  ice: '#98D8D8',
-  fighting: '#C03028',
-  poison: '#A040A0',
-  ground: '#E0C068',
-  flying: '#A890F0',
-  psychic: '#F85888',
-  bug: '#A8B820',
-  rock: '#B8A038',
-  ghost: '#705898',
-  dragon: '#7038F8',
-  dark: '#705848',
-  steel: '#B8B8D0',
-  fairy: '#EE99AC',
-}
-
-const TYPE_ICONS: Record<PokemonType, string> = {
-  normal: '⚪',
-  fire: '🔥',
-  water: '💧',
-  electric: '⚡',
-  grass: '🌿',
-  ice: '❄️',
-  fighting: '👊',
-  poison: '☠️',
-  ground: '🌍',
-  flying: '🪶',
-  psychic: '🔮',
-  bug: '🐛',
-  rock: '🪨',
-  ghost: '👻',
-  dragon: '🐉',
-  dark: '🌙',
-  steel: '⚙️',
-  fairy: '🧚',
+const TYPE_IMAGES: Record<PokemonType, string> = {
+  bug,
+  dark,
+  dragon,
+  electric,
+  fairy,
+  fighting,
+  fire,
+  flying,
+  ghost,
+  grass,
+  ground,
+  ice,
+  normal,
+  poison,
+  psychic,
+  rock,
+  steel,
+  water,
 }
 
 export const TypeIcon: FC<TypeIconProps> = ({ type }) => {
+  const style = {
+    '--type-color': COLORS[type],
+  } as CSSProperties
+
   return (
     <div
       className={styles.typeIcon}
-      style={{ backgroundColor: TYPE_COLORS[type] }}
+      style={style}
       title={type.charAt(0).toUpperCase() + type.slice(1)}
     >
-      <span className={styles.icon}>{TYPE_ICONS[type]}</span>
+      <img
+        src={TYPE_IMAGES[type]}
+        alt={`type ${type}`}
+        className={styles.icon}
+      />
     </div>
   )
 }
