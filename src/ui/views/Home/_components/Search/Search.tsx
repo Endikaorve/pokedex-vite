@@ -66,7 +66,7 @@ export const Search: FC<Props> = ({
       <input
         className={styles.input}
         value={search}
-        placeholder="Filter by name, type..."
+        placeholder="Filter by name or type"
         onChange={({ target }) => {
           onSearchChange(target.value)
         }}
