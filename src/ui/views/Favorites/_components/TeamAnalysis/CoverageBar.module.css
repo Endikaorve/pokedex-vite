@@ -1,0 +1,24 @@
+.barContainer {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+}
+
+.bar {
+  height: 16px;
+  flex: 1;
+  border-radius: 2px;
+  transition: opacity 0.2s ease;
+}
+
+.active {
+  background-color: #3b82f6;
+}
+
+.inactive {
+  background-color: #e5e7eb;
+}
+
+.bar:hover {
+  opacity: 0.8;
+}
