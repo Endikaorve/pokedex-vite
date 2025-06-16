@@ -7,9 +7,9 @@ interface DefenseBarProps {
 }
 
 const WEAKNESS_COLORS: Record<WeaknessLevel, string> = {
-  immune: '#9CA3AF',
-  'very-resistant': '#60A5FA',
-  resistant: '#93C5FD',
+  immune: '#1F2937',
+  'very-resistant': '#008000',
+  resistant: '#17c540',
   neutral: '#D1D5DB',
   weak: '#FB923C',
   'very-weak': '#EF4444',
