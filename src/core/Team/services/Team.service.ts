@@ -12,9 +12,6 @@ import {
   TypeMultiplier,
 } from '@/core/Pokemon/domain/PokemonType'
 
-/**
- * Convierte un multiplicador de efectividad a nivel de debilidad
- */
 const getWeaknessLevel = (multiplier: TypeMultiplier): WeaknessLevel => {
   if (multiplier === 0) return 'immune'
   if (multiplier === 0.25) return 'very-resistant'
@@ -23,13 +20,9 @@ const getWeaknessLevel = (multiplier: TypeMultiplier): WeaknessLevel => {
   if (multiplier === 2) return 'weak'
   if (multiplier === 4) return 'very-weak'
 
-  // Fallback para casos no esperados
   return 'neutral'
 }
 
-/**
- * Calcula la efectividad de un tipo atacante contra un Pokémon (considerando tipos duales)
- */
 const calculatePokemonDefense = (
   attackingType: PokemonType,
   pokemonTypes: PokemonType[]
@@ -44,9 +37,6 @@ const calculatePokemonDefense = (
   return multiplier as TypeMultiplier
 }
 
-/**
- * Calcula el análisis defensivo del equipo
- */
 const calculateTeamDefense = (team: Team): TeamDefenseAnalysis[] => {
   return POKEMON_TYPES.map((attackingType) => {
     const teamWeakness: WeaknessLevel[] = team.map((pokemon) => {
@@ -61,16 +51,12 @@ const calculateTeamDefense = (team: Team): TeamDefenseAnalysis[] => {
   })
 }
 
-/**
- * Calcula el análisis ofensivo del equipo
- */
 const calculateTeamCoverage = (team: Team): TeamCoverageAnalysis[] => {
   return POKEMON_TYPES.map((defendingType) => {
-    // Contar cuántos Pokémon del equipo tienen al menos un tipo súper efectivo contra este tipo
     const pokemonWithCoverage = team.filter((pokemon) => {
       return pokemon.types.some((attackingType) => {
         const effectiveness = getTypeEffectiveness(attackingType, defendingType)
-        return effectiveness > 1 // Súper efectivo
+        return effectiveness > 1
       })
     })
 
@@ -81,9 +67,6 @@ const calculateTeamCoverage = (team: Team): TeamCoverageAnalysis[] => {
   })
 }
 
-/**
- * Valida que el equipo tenga un tamaño válido
- */
 const validateTeamSize = (team: Team): void => {
   if (team.length === 0) {
     throw new Error('Team must have at least 1 Pokémon')
@@ -94,9 +77,6 @@ const validateTeamSize = (team: Team): void => {
   }
 }
 
-/**
- * Analiza un equipo Pokémon y retorna análisis defensivo y ofensivo
- */
 const analyze = (team: Team): TeamAnalysis => {
   validateTeamSize(team)
 
