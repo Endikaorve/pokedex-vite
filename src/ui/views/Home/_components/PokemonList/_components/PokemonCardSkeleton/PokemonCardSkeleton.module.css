@@ -58,63 +58,28 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-
   margin-top: 50px;
 }
 
 .cardSkeletonBodyTypeBadge {
-  display: flex;
-  align-items: center;
-  height: 30px;
-  width: 30px;
-  padding: 0 10px;
+  height: 20px;
+  width: 50px;
   border-radius: 100px;
   background: white;
 }
 
 .cardSkeletonBodyDetails {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 16px 0;
-}
-
-.cardSkeletonBodyDetailsContent {
-  height: 58px;
-  width: 180px;
+  height: 40px;
+  margin: 16px auto;
+  width: 80%;
   background: white;
-  border-radius: 100px;
+  border-radius: 8px;
 }
 
-.cardSkeletonBodyDetailsContent:last-child {
-  border-right: none;
-}
-
-.cardSkeletonBodyDetailsContentData {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  font-size: 10px;
-  line-height: 16px;
-}
-
-.cardSkeletonBodyDetailsContentDataImg {
-  height: 16px;
-  width: 16px;
-  margin-right: 8px;
-}
-
-.cardSkeletonBodyDetailsContentTitle {
-  text-align: center;
-  font-size: 8px;
-  line-height: 12px;
-  color: #666666;
-}
-
-.cardSkeletonBodyDescription {
-  height: 96px;
-  margin: 0 auto;
+.cardSkeletonBodyStats {
+  height: 60px;
+  margin: 12px auto;
   width: 90%;
   background: white;
-  border-radius: 20px;
+  border-radius: 8px;
 }

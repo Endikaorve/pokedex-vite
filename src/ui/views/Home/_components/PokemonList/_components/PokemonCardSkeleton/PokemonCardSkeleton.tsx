@@ -14,10 +14,8 @@ export const PokemonCardSkeleton: FC = () => (
           <span key={index} className={classes.cardSkeletonBodyTypeBadge} />
         ))}
       </div>
-      <div className={classes.cardSkeletonBodyDetails}>
-        <div className={classes.cardSkeletonBodyDetailsContent} />
-      </div>
-      <div className={classes.cardSkeletonBodyDescription} />
+      <div className={classes.cardSkeletonBodyDetails} />
+      <div className={classes.cardSkeletonBodyStats} />
     </div>
   </div>
 )
