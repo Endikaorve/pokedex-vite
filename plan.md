@@ -39,8 +39,8 @@ src/
 
 ### 3.1 Orden de implementación TDD
 
-1. **PokemonType.test.ts** - Tests del chart de tipos
-2. **PokemonType.ts** - Implementación del chart y getTypeEffectiveness
+1. **PokemonType.test.ts** - Tests de getTypeEffectiveness
+2. **PokemonType.ts** - Implementación de getTypeEffectiveness y TYPE_CHART
 3. **Team.service.test.ts** - Tests del servicio (casos de uso)
 4. **Team.ts** - Modelos del dominio
 5. **Team.service.ts** - Implementación del servicio
@@ -73,29 +73,13 @@ src/
 
 ## 4. Modelos del dominio
 
-### 4.1 Chart de efectividad (`PokemonType.ts`)
+### 4.1 Estructuras a implementar (`PokemonType.ts`)
 
 ```typescript
-export type PokemonType =
-  | 'bug'
-  | 'dark'
-  | 'dragon'
-  | 'electric'
-  | 'fairy'
-  | 'fighting'
-  | 'fire'
-  | 'flying'
-  | 'ghost'
-  | 'grass'
-  | 'ground'
-  | 'ice'
-  | 'normal'
-  | 'poison'
-  | 'psychic'
-  | 'rock'
-  | 'steel'
-  | 'water'
+// ✅ Ya movido desde Pokemon.ts
+export type PokemonType = 'bug' | 'dark' | 'dragon' | ...
 
+// 📝 A implementar en TDD
 export type TypeMultiplier = 0 | 0.25 | 0.5 | 1 | 2 | 4
 
 export const TYPE_CHART: Record<

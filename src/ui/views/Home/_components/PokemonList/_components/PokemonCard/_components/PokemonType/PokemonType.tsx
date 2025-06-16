@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from 'react'
 
-import { PokemonType as PokemonTypeModel } from '@/core/Pokemon/domain/Pokemon'
+import { PokemonType as PokemonTypeModel } from '@/core/Pokemon/domain/PokemonType'
 
 import bug from '@/ui/assets/types/bug.svg'
 import dark from '@/ui/assets/types/dark.svg'
