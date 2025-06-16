@@ -44,6 +44,14 @@ describe('PokemonType', () => {
       it('should return 0.5 for fire vs rock', () => {
         expect(getTypeEffectiveness('fire', 'rock')).toBe(0.5)
       })
+
+      it('should return 0.5 for fire vs fire', () => {
+        expect(getTypeEffectiveness('fire', 'fire')).toBe(0.5)
+      })
+
+      it('should return 0.5 for psychic vs psychic', () => {
+        expect(getTypeEffectiveness('psychic', 'psychic')).toBe(0.5)
+      })
     })
 
     describe('Immune attacks (0x damage)', () => {
@@ -73,20 +81,20 @@ describe('PokemonType', () => {
         expect(getTypeEffectiveness('normal', 'normal')).toBe(1)
       })
 
-      it('should return 1 for fire vs fire', () => {
-        expect(getTypeEffectiveness('fire', 'fire')).toBe(1)
-      })
-
       it('should return 1 for water vs electric', () => {
         expect(getTypeEffectiveness('water', 'electric')).toBe(1)
       })
 
-      it('should return 1 for psychic vs psychic', () => {
-        expect(getTypeEffectiveness('psychic', 'psychic')).toBe(1)
-      })
-
       it('should return 1 for dragon vs normal', () => {
         expect(getTypeEffectiveness('dragon', 'normal')).toBe(1)
+      })
+
+      it('should return 1 for steel vs normal', () => {
+        expect(getTypeEffectiveness('steel', 'normal')).toBe(1)
+      })
+
+      it('should return 1 for fairy vs normal', () => {
+        expect(getTypeEffectiveness('fairy', 'normal')).toBe(1)
       })
     })
 
