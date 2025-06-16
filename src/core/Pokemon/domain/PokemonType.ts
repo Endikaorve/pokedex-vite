@@ -23,7 +23,7 @@ export type PokemonType = (typeof POKEMON_TYPES)[number]
 
 export type TypeMultiplier = 0 | 0.25 | 0.5 | 1 | 2 | 4
 
-export const TYPE_CHART: Record<
+export const TYPE_ATTACK_EFFECTIVENESS: Record<
   PokemonType,
   Record<PokemonType, TypeMultiplier>
 > = {
@@ -393,5 +393,5 @@ export const getTypeEffectiveness = (
   attackingType: PokemonType,
   defendingType: PokemonType
 ): TypeMultiplier => {
-  return TYPE_CHART[attackingType][defendingType]
+  return TYPE_ATTACK_EFFECTIVENESS[attackingType][defendingType]
 }
