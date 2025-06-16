@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { usePokemon } from './_hooks/usePokemon'
 import { PokemonCard } from '../Home/_components/PokemonList/_components/PokemonCard'
+import { PokemonCardSkeleton } from '../Home/_components/PokemonList/_components/PokemonCardSkeleton'
 import { useParams } from '@/ui/hooks/router'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
 import { Main } from '@/ui/components/Main'
@@ -31,7 +32,7 @@ export const Details: FC = () => {
   if (isLoading) {
     return (
       <Main>
-        <h1>Cargando...</h1>
+        <PokemonCardSkeleton />
       </Main>
     )
   }
