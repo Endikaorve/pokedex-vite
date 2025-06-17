@@ -1,34 +1,112 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { Home } from '../Home'
-import { render, serviceMockBuilder } from '@/test/utils'
-import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
-import { pokemonBuilder } from '@/core/Pokemon/domain/__builders__/Pokemon.builder'
+import { render } from '@/test/utils'
+
+// Mock de localStorage
+const localStorageMock = {
+  getItem: vitest.fn(),
+  setItem: vitest.fn(),
+  removeItem: vitest.fn(),
+  clear: vitest.fn(),
+}
+
+// Mock de fetch global
+const fetchMock = vitest.fn()
 
 describe('Home', () => {
+  beforeEach(() => {
+    // Configurar mocks
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageMock,
+      writable: true,
+    })
+    globalThis.fetch = fetchMock
+
+    // Reset mocks
+    vitest.clearAllMocks()
+    localStorageMock.getItem.mockReturnValue('[]') // Favoritos vacíos por defecto
+  })
+
+  afterEach(() => {
+    vitest.restoreAllMocks()
+  })
+
   it('muestra el listado de pokemons', async () => {
-    serviceMockBuilder(pokemonService, 'listByGeneration')
-      .withValue([
-        pokemonBuilder({
-          id: '1',
-          name: 'Pikachu',
-        }).build(),
-        pokemonBuilder({
-          id: '2',
-          name: 'Charmander',
-        }).build(),
-      ])
-      .build()
+    // Mock de la respuesta de la lista de pokémons
+    const pokemonListResponse = {
+      results: [
+        { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/' },
+        { name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/4/' },
+      ],
+    }
+
+    // Mock de las respuestas individuales de pokémons
+    const pikachuData = {
+      id: 25,
+      name: 'pikachu',
+      height: 4,
+      weight: 60,
+      types: [{ slot: 1, type: { name: 'electric' } }],
+      sprites: {
+        other: {
+          'official-artwork': { front_default: 'pikachu-artwork.png' },
+          dream_world: { front_default: 'pikachu-dream.png' },
+        },
+      },
+      stats: [
+        { base_stat: 35, stat: { name: 'hp' } },
+        { base_stat: 55, stat: { name: 'attack' } },
+        { base_stat: 40, stat: { name: 'defense' } },
+        { base_stat: 50, stat: { name: 'special-attack' } },
+        { base_stat: 50, stat: { name: 'special-defense' } },
+        { base_stat: 90, stat: { name: 'speed' } },
+      ],
+    }
+
+    const charmanderData = {
+      id: 4,
+      name: 'charmander',
+      height: 6,
+      weight: 85,
+      types: [{ slot: 1, type: { name: 'fire' } }],
+      sprites: {
+        other: {
+          'official-artwork': { front_default: 'charmander-artwork.png' },
+          dream_world: { front_default: 'charmander-dream.png' },
+        },
+      },
+      stats: [
+        { base_stat: 39, stat: { name: 'hp' } },
+        { base_stat: 52, stat: { name: 'attack' } },
+        { base_stat: 43, stat: { name: 'defense' } },
+        { base_stat: 60, stat: { name: 'special-attack' } },
+        { base_stat: 50, stat: { name: 'special-defense' } },
+        { base_stat: 65, stat: { name: 'speed' } },
+      ],
+    }
+
+    fetchMock
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(pokemonListResponse),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(pikachuData),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(charmanderData),
+      } as Response)
 
     render(<Home />)
 
-    expect(await screen.findByText(/Pikachu/i)).toBeInTheDocument()
-    expect(screen.getByText(/Charmander/i)).toBeInTheDocument()
+    expect(await screen.findByText(/pikachu/i)).toBeInTheDocument()
+    expect(screen.getByText(/charmander/i)).toBeInTheDocument()
   })
 
   it('muestra un mensaje de error si falla la carga de pokemons', async () => {
-    serviceMockBuilder(pokemonService, 'listByGeneration')
-      .withError(new Error('Error al cargar los Pokémons'))
-      .build()
+    fetchMock.mockRejectedValueOnce(new Error('Network error'))
 
     render(<Home />)
 
@@ -38,44 +116,86 @@ describe('Home', () => {
   })
 
   it('permite filtrar pokemons por nombre', async () => {
-    serviceMockBuilder(pokemonService, 'listByGeneration')
-      .withValue([
-        pokemonBuilder({
-          id: '1',
-          name: 'Pikachu',
-          stats: {
-            hp: 100,
-            attack: 100,
-            defense: 100,
-            specialAttack: 100,
-            specialDefense: 100,
-            speed: 100,
-          },
-        }).build(),
-        pokemonBuilder({
-          id: '2',
-          name: 'Charmander',
-          stats: {
-            hp: 100,
-            attack: 100,
-            defense: 100,
-            specialAttack: 100,
-            specialDefense: 100,
-            speed: 100,
-          },
-        }).build(),
-      ])
-      .build()
+    // Mock de la respuesta de la lista de pokémons
+    const pokemonListResponse = {
+      results: [
+        { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/' },
+        { name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/4/' },
+      ],
+    }
+
+    // Mock de las respuestas individuales de pokémons
+    const pikachuData = {
+      id: 25,
+      name: 'pikachu',
+      height: 4,
+      weight: 60,
+      types: [{ slot: 1, type: { name: 'electric' } }],
+      sprites: {
+        other: {
+          'official-artwork': { front_default: 'pikachu-artwork.png' },
+          dream_world: { front_default: 'pikachu-dream.png' },
+        },
+      },
+      stats: [
+        { base_stat: 100, stat: { name: 'hp' } },
+        { base_stat: 100, stat: { name: 'attack' } },
+        { base_stat: 100, stat: { name: 'defense' } },
+        { base_stat: 100, stat: { name: 'special-attack' } },
+        { base_stat: 100, stat: { name: 'special-defense' } },
+        { base_stat: 100, stat: { name: 'speed' } },
+      ],
+    }
+
+    const charmanderData = {
+      id: 4,
+      name: 'charmander',
+      height: 6,
+      weight: 85,
+      types: [{ slot: 1, type: { name: 'fire' } }],
+      sprites: {
+        other: {
+          'official-artwork': { front_default: 'charmander-artwork.png' },
+          dream_world: { front_default: 'charmander-dream.png' },
+        },
+      },
+      stats: [
+        { base_stat: 100, stat: { name: 'hp' } },
+        { base_stat: 100, stat: { name: 'attack' } },
+        { base_stat: 100, stat: { name: 'defense' } },
+        { base_stat: 100, stat: { name: 'special-attack' } },
+        { base_stat: 100, stat: { name: 'special-defense' } },
+        { base_stat: 100, stat: { name: 'speed' } },
+      ],
+    }
+
+    fetchMock
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(pokemonListResponse),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(pikachuData),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(charmanderData),
+      } as Response)
 
     render(<Home />)
 
-    expect(await screen.findByText(/Pikachu/i)).toBeInTheDocument()
-    expect(screen.getByText(/Charmander/i)).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText(/pikachu/i)).toBeInTheDocument()
+      expect(screen.getByText(/charmander/i)).toBeInTheDocument()
+    })
 
     const input = screen.getByPlaceholderText('Filter by name or type')
-    fireEvent.change(input, { target: { value: 'Pika' } })
+    fireEvent.change(input, { target: { value: 'pika' } })
 
-    expect(screen.getByText(/Pikachu/i)).toBeInTheDocument()
-    expect(screen.queryByText(/Charmander/i)).not.toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText(/pikachu/i)).toBeInTheDocument()
+      expect(screen.queryByText(/charmander/i)).not.toBeInTheDocument()
+    })
   })
 })
