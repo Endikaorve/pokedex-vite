@@ -47,7 +47,6 @@ const pokemons: Pokemon[] = [
 
 describe('PokemonService', () => {
   const mockRepository: PokemonRepository = {
-    listByGeneration: vitest.fn().mockResolvedValue(pokemons),
     getById: vitest.fn().mockResolvedValue(pokemons[0]),
     toggleFavorite: vitest.fn(),
     listFavorites: vitest.fn().mockResolvedValue(pokemons),
@@ -56,15 +55,6 @@ describe('PokemonService', () => {
   beforeEach(() => {
     setPokemonRepository(mockRepository)
     vitest.clearAllMocks()
-  })
-
-  describe('listByGeneration', () => {
-    it('should return a list of pokemons by generation', async () => {
-      const result = await pokemonService.listByGeneration('Kanto')
-
-      expect(mockRepository.listByGeneration).toHaveBeenCalledWith('Kanto')
-      expect(result).toStrictEqual(pokemons)
-    })
   })
 
   describe('getById', () => {

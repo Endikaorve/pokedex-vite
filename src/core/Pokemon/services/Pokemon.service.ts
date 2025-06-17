@@ -1,12 +1,9 @@
-import { Pokemon, PokemonGeneration } from '../domain/Pokemon'
+import { Pokemon } from '../domain/Pokemon'
 import { PokemonRepository } from '../domain/PokemonRepository'
 
 let pokemonRepository: PokemonRepository
 
 export const pokemonService = {
-  listByGeneration: (generation: PokemonGeneration) => {
-    return pokemonRepository.listByGeneration(generation)
-  },
   getById: (id: Pokemon['id']) => {
     return pokemonRepository.getById(id)
   },

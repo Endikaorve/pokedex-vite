@@ -1,8 +1,3 @@
-export interface PokemonSimplifiedDTO {
-  name: string
-  url: string
-}
-
 export interface PokemonDTO {
   id: number
   name: string

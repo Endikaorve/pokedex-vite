@@ -96,34 +96,6 @@ const pokemon: Pokemon = {
 }
 
 describe('Pokemon.infra.repository', () => {
-  describe('listByGeneration', () => {
-    it('should list pokemons by generation', async () => {
-      vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
-      vitest
-        .spyOn(apiClient, 'get')
-        .mockResolvedValueOnce({ results: [{ url: 'url1' }] })
-        .mockResolvedValueOnce(pokemonDTO)
-
-      const result = await pokemonInfraRepository.listByGeneration('Kanto')
-
-      expect(localStorageClient.get).toHaveBeenCalledTimes(1)
-      expect(apiClient.get).toHaveBeenCalledTimes(2)
-      expect(apiClient.get).toHaveBeenNthCalledWith(
-        1,
-        'https://pokeapi.co/api/v2/pokemon',
-        {
-          params: {
-            offset: 0,
-            limit: 151,
-          },
-        }
-      )
-      expect(apiClient.get).toHaveBeenNthCalledWith(2, 'url1')
-
-      expect(result).toEqual([pokemon])
-    })
-  })
-
   describe('getById', () => {
     it('should get a pokemon by id', async () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
