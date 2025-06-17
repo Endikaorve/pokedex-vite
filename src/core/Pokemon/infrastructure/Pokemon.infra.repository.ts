@@ -24,15 +24,18 @@ export const pokemonInfraRepository: PokemonRepository = {
   listFavorites: async () => {
     const favoritePokemonIDs = listIDs()
 
-    const favoritePokemons = await Promise.all(
+    const favoritePokemonsDTO = await Promise.all(
       favoritePokemonIDs.map((id) =>
         apiClient.get<PokemonDTO>(`https://pokeapi.co/api/v2/pokemon/${id}`)
       )
     )
 
-    return favoritePokemons.map((pokemonDTO) =>
-      buildPokemon(pokemonDTO, favoritePokemonIDs)
-    )
+    // ## TODO: refactorizar
+    const favoritePokemons = []
+    for (const pokemonDTO of favoritePokemonsDTO) {
+      favoritePokemons.push(buildPokemon(pokemonDTO, favoritePokemonIDs))
+    }
+    return favoritePokemons
   },
 }
 
