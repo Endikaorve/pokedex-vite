@@ -30,7 +30,6 @@ export const pokemonInfraRepository: PokemonRepository = {
       )
     )
 
-    // ## TODO: refactorizar
     const favoritePokemons = []
     for (const pokemonDTO of favoritePokemonsDTO) {
       favoritePokemons.push(buildPokemon(pokemonDTO, favoritePokemonIDs))
