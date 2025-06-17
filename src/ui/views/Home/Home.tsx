@@ -206,7 +206,6 @@ export const Home: FC = () => {
 
       setPokemons(pokemonsData)
     } catch (error) {
-      console.error('Error loading pokemons:', error)
       setHasError(true)
     }
   }

@@ -131,7 +131,6 @@ export const Details: FC = () => {
 
       setPokemon(pokemonData)
     } catch (error) {
-      console.error('Error loading pokemon:', error)
       setHasError(true)
     } finally {
       setIsValidating(false)
