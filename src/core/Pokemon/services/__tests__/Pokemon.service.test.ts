@@ -47,7 +47,6 @@ const pokemons: Pokemon[] = [
 
 describe('PokemonService', () => {
   const mockRepository: PokemonRepository = {
-    getById: vitest.fn().mockResolvedValue(pokemons[0]),
     toggleFavorite: vitest.fn(),
     listFavorites: vitest.fn().mockResolvedValue(pokemons),
   }
@@ -55,15 +54,6 @@ describe('PokemonService', () => {
   beforeEach(() => {
     setPokemonRepository(mockRepository)
     vitest.clearAllMocks()
-  })
-
-  describe('getById', () => {
-    it('should return a pokemon by id', async () => {
-      const result = await pokemonService.getById('1')
-
-      expect(mockRepository.getById).toHaveBeenCalledWith('1')
-      expect(result).toStrictEqual(pokemons[0])
-    })
   })
 
   describe('toggleFavorite', () => {

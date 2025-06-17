@@ -96,23 +96,6 @@ const pokemon: Pokemon = {
 }
 
 describe('Pokemon.infra.repository', () => {
-  describe('getById', () => {
-    it('should get a pokemon by id', async () => {
-      vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])
-      vitest.spyOn(apiClient, 'get').mockResolvedValue(pokemonDTO)
-
-      const result = await pokemonInfraRepository.getById('1')
-
-      expect(localStorageClient.get).toHaveBeenCalledTimes(1)
-      expect(apiClient.get).toHaveBeenCalledTimes(1)
-      expect(apiClient.get).toHaveBeenCalledWith(
-        'https://pokeapi.co/api/v2/pokemon/1'
-      )
-
-      expect(result).toEqual(pokemon)
-    })
-  })
-
   describe('toggleFavorite', () => {
     it('should toggle favorite', async () => {
       vitest.spyOn(localStorageClient, 'get').mockReturnValueOnce([])

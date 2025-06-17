@@ -8,15 +8,6 @@ import { localStorageClient } from '@/core/_clients/localStorageClient'
 const FAVORITES_KEY = 'favorites'
 
 export const pokemonInfraRepository: PokemonRepository = {
-  getById: async (id) => {
-    const pokemonDTO = await apiClient.get<PokemonDTO>(
-      `https://pokeapi.co/api/v2/pokemon/${id}`
-    )
-
-    const favoritePokemonIDs = listIDs()
-
-    return buildPokemon(pokemonDTO, favoritePokemonIDs)
-  },
   toggleFavorite: ({ id }) => {
     const favorites = listIDs()
 
