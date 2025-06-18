@@ -2,7 +2,6 @@ import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { Home } from '../Home'
 import { render } from '@/test/utils'
 
-// Mock de localStorage
 const localStorageMock = {
   getItem: vitest.fn(),
   setItem: vitest.fn(),
@@ -10,21 +9,18 @@ const localStorageMock = {
   clear: vitest.fn(),
 }
 
-// Mock de fetch global
 const fetchMock = vitest.fn()
 
 describe('Home', () => {
   beforeEach(() => {
-    // Configurar mocks
     Object.defineProperty(window, 'localStorage', {
       value: localStorageMock,
       writable: true,
     })
     globalThis.fetch = fetchMock
 
-    // Reset mocks
     vitest.clearAllMocks()
-    localStorageMock.getItem.mockReturnValue('[]') // Favoritos vacíos por defecto
+    localStorageMock.getItem.mockReturnValue('[]')
   })
 
   afterEach(() => {
@@ -32,7 +28,6 @@ describe('Home', () => {
   })
 
   it('muestra el listado de pokemons', async () => {
-    // Mock de la respuesta de la lista de pokémons
     const pokemonListResponse = {
       results: [
         { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/' },
@@ -40,7 +35,6 @@ describe('Home', () => {
       ],
     }
 
-    // Mock de las respuestas individuales de pokémons
     const pikachuData = {
       id: 25,
       name: 'pikachu',
@@ -116,7 +110,6 @@ describe('Home', () => {
   })
 
   it('permite filtrar pokemons por nombre', async () => {
-    // Mock de la respuesta de la lista de pokémons
     const pokemonListResponse = {
       results: [
         { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/' },
@@ -124,7 +117,6 @@ describe('Home', () => {
       ],
     }
 
-    // Mock de las respuestas individuales de pokémons
     const pikachuData = {
       id: 25,
       name: 'pikachu',
