@@ -435,11 +435,11 @@ export const Details: FC = () => {
             }}
           >
             <img
-              src={pokemon.images.alt}
+              src={pokemon.images.main}
               alt={pokemon.name}
               style={{
-                width: '130px',
-                height: '130px',
+                width: '140px',
+                height: '140px',
                 objectFit: 'contain',
                 filter: 'drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))',
               }}
