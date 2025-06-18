@@ -28,13 +28,13 @@ export const Favorites: FC = () => {
   const canAnalyze = pokemons && pokemons.length > 0 && pokemons.length <= 6
   const analysisError =
     pokemons && pokemons.length > 6
-      ? 'El equipo no puede tener más de 6 Pokémon'
+      ? 'Team cannot have more than 6 Pokémon'
       : null
 
   if (hasError) {
     return (
       <Main>
-        <h1>Error al cargar los Pokémons Favoritos</h1>
+        <h1>Error loading Favorite Pokémons</h1>
       </Main>
     )
   }

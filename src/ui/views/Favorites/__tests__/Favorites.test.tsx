@@ -29,13 +29,13 @@ describe('Favorites', () => {
 
   it('muestra un mensaje de error si falla la carga de pokémons favoritos', async () => {
     serviceMockBuilder(pokemonService, 'listFavorites')
-      .withError(new Error('Error al cargar los Pokémons Favoritos'))
+      .withError(new Error('Error loading Favorite Pokémons'))
       .build()
 
     render(<Favorites />)
 
     expect(
-      await screen.findByText(/Error al cargar los Pokémons Favoritos/i)
+      await screen.findByText(/Error loading Favorite Pokémons/i)
     ).toBeInTheDocument()
   })
 
@@ -73,7 +73,7 @@ describe('Favorites', () => {
 
     expect(await screen.findByText(/Pokemon1/i)).toBeInTheDocument()
     expect(
-      screen.getByText(/El equipo no puede tener más de 6 Pokémon/i)
+      screen.getByText(/Team cannot have more than 6 Pokémon/i)
     ).toBeInTheDocument()
   })
 })

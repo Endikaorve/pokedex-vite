@@ -105,7 +105,7 @@ describe('Home', () => {
     render(<Home />)
 
     expect(
-      await screen.findByText(/Error al cargar los Pokémons/i)
+      await screen.findByText(/Error loading Pokémons/i)
     ).toBeInTheDocument()
   })
 

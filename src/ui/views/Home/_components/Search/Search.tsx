@@ -108,7 +108,7 @@ export const Search: FC<Props> = ({
           className={styles.valueInput}
           type="text"
           value={statFilter.value}
-          placeholder="Valor"
+          placeholder="Value"
           onChange={({ target }) => {
             const numValue = Number(target.value)
             onStatFilterChange({

@@ -75,7 +75,7 @@ describe('Details', () => {
     render(<Details />)
 
     expect(
-      await screen.findByText(/Error al cargar el Pokémon/i)
+      await screen.findByText(/Error loading Pokémon/i)
     ).toBeInTheDocument()
   })
 
@@ -84,6 +84,6 @@ describe('Details', () => {
 
     render(<Details />)
 
-    expect(screen.getByText(/El Pokémon no existe/i)).toBeInTheDocument()
+    expect(screen.getByText(/Pokémon does not exist/i)).toBeInTheDocument()
   })
 })

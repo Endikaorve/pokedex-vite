@@ -147,7 +147,7 @@ export const Details: FC = () => {
   if (id === undefined) {
     return (
       <Main>
-        <h1>El Pokémon no existe</h1>
+        <h1>Pokémon does not exist</h1>
       </Main>
     )
   }
@@ -155,7 +155,7 @@ export const Details: FC = () => {
   if (hasError) {
     return (
       <Main>
-        <h1>Error al cargar el Pokémon</h1>
+        <h1>Error loading Pokémon</h1>
       </Main>
     )
   }

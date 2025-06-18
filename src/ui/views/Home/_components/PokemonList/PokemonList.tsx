@@ -27,7 +27,7 @@ export const PokemonList: FC<Props> = ({ pokemons, onFavoriteToggle }) => {
   if (pokemons.length === 0) {
     return (
       <section className={styles.container}>
-        <h2>No se encontraron Pokémons</h2>
+        <h2>No Pokémons found</h2>
       </section>
     )
   }

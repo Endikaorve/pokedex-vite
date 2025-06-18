@@ -27,7 +27,7 @@ export const Home: FC = () => {
   if (hasError) {
     return (
       <Main>
-        <h1>Error al cargar los Pokémons</h1>
+        <h1>Error loading Pokémons</h1>
       </Main>
     )
   }
