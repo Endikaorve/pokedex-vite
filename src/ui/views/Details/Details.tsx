@@ -223,10 +223,11 @@ export const Details: FC = () => {
     setPokemon(updatedPokemon)
   }
 
-  const [mainType] = pokemon.types
+  const [mainType, secondaryType] = pokemon.types
   const normalizedCode = `#${pokemon.id.padStart(3, '0')}`
 
   const mainTypeColor = COLORS[mainType]
+  const secondaryTypeColor = secondaryType ? COLORS[secondaryType] : null
 
   // Componente para mostrar un tipo de Pokémon
   const PokemonTypeComponent: FC<{ type: PokemonTypeModel }> = ({ type }) => {
@@ -330,7 +331,9 @@ export const Details: FC = () => {
         {/* Header Section */}
         <div
           style={{
-            background: `linear-gradient(135deg, ${mainTypeColor} 0%, color-mix(in srgb, ${mainTypeColor}, #000000 20%) 100%)`,
+            background: secondaryTypeColor
+              ? `linear-gradient(135deg, ${mainTypeColor} 0%, ${secondaryTypeColor} 100%)`
+              : `linear-gradient(135deg, ${mainTypeColor} 0%, color-mix(in srgb, ${mainTypeColor}, #000000 20%) 100%)`,
             padding: '40px 32px 100px',
             position: 'relative',
             color: 'white',
