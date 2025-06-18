@@ -6,7 +6,7 @@ import { PokemonList } from './_components/PokemonList'
 import { Search, StatFilter } from './_components/Search'
 import { pokemonService } from '@/core/Pokemon/services/Pokemon.service'
 import { Main } from '@/ui/components/Main'
-import { usePokemons } from './usePokemons'
+import { usePokemons } from './_hooks/usePokemons'
 
 export const Home: FC = () => {
   const [generation, setGeneration] = useState<PokemonGeneration>('Kanto')
