@@ -35,9 +35,9 @@ const STAT_LABELS: Record<StatName, string> = {
 }
 
 const COMPARISON_LABELS: Record<StatComparison, string> = {
-  greater: 'Mayor que',
-  equal: 'Igual a',
-  less: 'Menor que',
+  greater: 'Greater than',
+  equal: 'Equal to',
+  less: 'Less than',
 }
 
 export const Search: FC<Props> = ({

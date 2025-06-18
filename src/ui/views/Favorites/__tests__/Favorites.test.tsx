@@ -53,7 +53,7 @@ describe('Favorites', () => {
     render(<Favorites />)
 
     expect(await screen.findByText(/Pikachu/i)).toBeInTheDocument()
-    expect(screen.getByText(/Analizar Equipo/i)).toBeInTheDocument()
+    expect(screen.getByText(/Analyze Team/i)).toBeInTheDocument()
   })
 
   it('muestra mensaje de error cuando hay más de 6 pokémons en el equipo', async () => {

@@ -53,7 +53,7 @@ export const Favorites: FC = () => {
             disabled={!canAnalyze}
             className={styles.analyzeButton}
           >
-            {showAnalysis ? 'Ocultar Análisis' : 'Analizar Equipo'}
+            {showAnalysis ? 'Hide Analysis' : 'Analyze Team'}
           </button>
 
           {analysisError && (

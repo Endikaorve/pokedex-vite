@@ -20,7 +20,7 @@ export const TeamAnalysis: FC<TeamAnalysisProps> = ({ team }) => {
   if (!analysis) {
     return (
       <div className={styles.container}>
-        <p>Error al analizar el equipo</p>
+        <p>Not implemented yet</p>
       </div>
     )
   }
