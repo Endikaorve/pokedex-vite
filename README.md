@@ -1,30 +1,69 @@
-# React + TypeScript + Vite
+# Proyecto vehicular para taller de la SCPNA sobre IA en el desarrollo de software
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Scripts Disponibles
 
-Currently, two official plugins are available:
+### Desarrollo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Inicia el servidor de desarrollo con Vite
+
+### Build
+
+```bash
+npm run build
+```
+
+Compila TypeScript y construye la aplicación para producción
+
+### Linting
+
+```bash
+npm run lint
+```
+
+Ejecuta ESLint en archivos .ts y .tsx con configuración estricta
+
+### Preview
+
+```bash
+npm run preview
+```
+
+Previsualiza la build de producción localmente
+
+### Testing
+
+```bash
+npm run test
+```
+
+Ejecuta todos los tests con Vitest
+
+```bash
+npm run test:watch
+```
+
+Ejecuta tests en modo watch (observa cambios)
+
+```bash
+npm run test:watch:unit
+```
+
+Ejecuta tests unitarios en modo watch
+
+```bash
+npm run test:watch:integration
+```
+
+Ejecuta tests de integración en modo watch
+
+### Formateo de código
+
+```bash
+npm run prettier
+```
+
+Formatea todos los archivos con Prettier
