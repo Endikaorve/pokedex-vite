@@ -7,6 +7,7 @@ import { PokemonType as PokemonTypeModel } from '@/core/Pokemon/domain/PokemonTy
 import { Main } from '@/ui/components/Main'
 import { Icon } from '@/ui/components/Icon/Icon'
 import { COLORS } from '@/ui/styles/utils/colors'
+import classes from './Details.module.css'
 
 // Assets
 import height from '@/ui/assets/height.svg'
@@ -233,30 +234,15 @@ export const Details: FC = () => {
   const PokemonTypeComponent: FC<{ type: PokemonTypeModel }> = ({ type }) => {
     const style = {
       '--type-color': COLORS[type],
+      backgroundColor: 'var(--type-color)',
     } as CSSProperties
 
     return (
-      <span
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-          borderRadius: '100px',
-          height: '24px',
-          backgroundColor: 'var(--type-color)',
-          padding: '0 10px 0 6px',
-          fontSize: '12px',
-          lineHeight: '14px',
-          fontWeight: '700',
-          textTransform: 'capitalize',
-          color: 'white',
-          ...style,
-        }}
-      >
+      <span className={classes.typeChip} style={style}>
         <img
           src={typeImages[type]}
           alt={`type ${type}`}
-          style={{ height: '18px' }}
+          className={classes.typeIcon}
         />
         {type}
       </span>
@@ -270,134 +256,70 @@ export const Details: FC = () => {
   }) => {
     const formattedValue = value.toString().padStart(3, '0')
 
+    const statStyle = {
+      color: mainTypeColor,
+    } as CSSProperties
+
+    const statBarBgStyle = {
+      backgroundColor: `color-mix(in srgb, ${mainTypeColor}, #ffffff 70%)`,
+    } as CSSProperties
+
+    const statBarStyle = {
+      width: `${(value / 255) * 100}%`,
+      backgroundColor: mainTypeColor,
+    } as CSSProperties
+
     return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          padding: '8px 0',
-          fontSize: '14px',
-          lineHeight: '16px',
-        }}
-      >
-        <p
-          style={{
-            width: '50px',
-            fontWeight: '700',
-            textAlign: 'right',
-            color: mainTypeColor,
-          }}
-        >
+      <div className={classes.stat}>
+        <p className={classes.statTitle} style={statStyle}>
           {title}
         </p>
-        <p style={{ width: '50px' }}>{formattedValue}</p>
-        <div
-          style={{
-            flex: 1,
-            height: '12px',
-            backgroundColor: `color-mix(in srgb, ${mainTypeColor}, #ffffff 70%)`,
-            borderRadius: '10px',
-            overflow: 'hidden',
-          }}
-        >
-          <div
-            style={{
-              height: '100%',
-              width: `${(value / 255) * 100}%`,
-              backgroundColor: mainTypeColor,
-              borderRadius: '10px',
-              transition: 'width 0.3s ease',
-            }}
-          />
+        <p className={classes.statValue}>{formattedValue}</p>
+        <div className={classes.statBarContainer} style={statBarBgStyle}>
+          <div className={classes.statBar} style={statBarStyle} />
         </div>
       </div>
     )
   }
 
+  const headerStyle = {
+    background: secondaryTypeColor
+      ? `linear-gradient(135deg, ${mainTypeColor} 0%, ${secondaryTypeColor} 100%)`
+      : `linear-gradient(135deg, ${mainTypeColor} 0%, color-mix(in srgb, ${mainTypeColor}, #000000 20%) 100%)`,
+  } as CSSProperties
+
+  const aboutCardStyle = {
+    border: `2px solid color-mix(in srgb, ${mainTypeColor}, #ffffff 70%)`,
+  } as CSSProperties
+
+  const aboutCardValueStyle = {
+    color: mainTypeColor,
+  } as CSSProperties
+
+  const statsTitleStyle = {
+    color: mainTypeColor,
+    borderBottomColor: mainTypeColor,
+  } as CSSProperties
+
+  const statsContainerStyle = {
+    border: `2px solid color-mix(in srgb, ${mainTypeColor}, #ffffff 70%)`,
+  } as CSSProperties
+
   return (
-    <div style={{ padding: '16px', width: '100%' }}>
-      <div
-        style={{
-          maxWidth: '1000px',
-          width: '100%',
-          margin: '0 auto',
-          backgroundColor: '#fff',
-          borderRadius: '20px',
-          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-          overflow: 'hidden',
-        }}
-      >
+    <div className={classes.container}>
+      <div className={classes.card}>
         {/* Header Section */}
-        <div
-          style={{
-            background: secondaryTypeColor
-              ? `linear-gradient(135deg, ${mainTypeColor} 0%, ${secondaryTypeColor} 100%)`
-              : `linear-gradient(135deg, ${mainTypeColor} 0%, color-mix(in srgb, ${mainTypeColor}, #000000 20%) 100%)`,
-            padding: '40px 32px 100px',
-            position: 'relative',
-            color: 'white',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              marginBottom: '20px',
-            }}
-          >
-            <div>
-              <h1
-                style={{
-                  fontSize: '36px',
-                  fontWeight: '800',
-                  textTransform: 'capitalize',
-                  margin: '0 0 8px 0',
-                  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
-                }}
-              >
-                {pokemon.name}
-              </h1>
-              <p
-                style={{
-                  fontSize: '18px',
-                  fontWeight: '600',
-                  opacity: '0.9',
-                  margin: '0',
-                }}
-              >
-                {normalizedCode}
-              </p>
+        <div className={classes.header} style={headerStyle}>
+          <div className={classes.headerContent}>
+            <div className={classes.headerInfo}>
+              <h1>{pokemon.name}</h1>
+              <p>{normalizedCode}</p>
             </div>
             <button
               onClick={handleFavoriteToggle}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '48px',
-                height: '48px',
-                borderRadius: '50%',
-                border: 'none',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                backdropFilter: 'blur(10px)',
-                color: 'white',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  'rgba(255, 255, 255, 0.3)'
-                e.currentTarget.style.transform = 'scale(1.1)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  'rgba(255, 255, 255, 0.2)'
-                e.currentTarget.style.transform = 'scale(1)'
-              }}
+              className={classes.favoriteButton}
             >
-              <div style={{ fontSize: '24px' }}>
+              <div className={classes.favoriteIcon}>
                 {pokemon.isFavorite ? (
                   <Icon icon="starFilled" />
                 ) : (
@@ -408,173 +330,70 @@ export const Details: FC = () => {
           </div>
 
           {/* Types */}
-          <div
-            style={{
-              display: 'flex',
-              gap: '12px',
-              marginBottom: '20px',
-            }}
-          >
+          <div className={classes.typesContainer}>
             {pokemon.types.map((type) => (
               <PokemonTypeComponent key={type} type={type} />
             ))}
           </div>
 
           {/* Pokémon Image */}
-          <div
-            style={{
-              position: 'absolute',
-              right: '32px',
-              bottom: '-80px',
-              width: '200px',
-              height: '200px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              backdropFilter: 'blur(10px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)',
-            }}
-          >
+          <div className={classes.imageContainer}>
             <img
               src={pokemon.images.main}
               alt={pokemon.name}
-              style={{
-                width: '140px',
-                height: '140px',
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))',
-              }}
+              className={classes.pokemonImage}
             />
           </div>
         </div>
 
         {/* Content Section */}
-        <div
-          style={{
-            padding: '40px 32px 32px',
-            paddingTop: '100px',
-          }}
-        >
+        <div className={classes.content}>
           {/* About Section */}
-          <div style={{ marginBottom: '40px' }}>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                gap: '24px',
-                marginBottom: '32px',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  padding: '24px',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '16px',
-                  border: `2px solid color-mix(in srgb, ${mainTypeColor}, #ffffff 70%)`,
-                }}
-              >
+          <div className={classes.aboutSection}>
+            <div className={classes.aboutGrid}>
+              <div className={classes.aboutCard} style={aboutCardStyle}>
                 <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    marginBottom: '8px',
-                    color: mainTypeColor,
-                    fontWeight: '600',
-                  }}
+                  className={classes.aboutCardValue}
+                  style={aboutCardValueStyle}
                 >
                   <img
                     src={weight}
                     alt="weight-icon"
-                    style={{ width: '20px', height: '20px' }}
+                    className={classes.aboutCardIcon}
                   />
-                  <span style={{ fontSize: '24px', fontWeight: '700' }}>
+                  <span className={classes.aboutCardNumber}>
                     {pokemon.weight} kg
                   </span>
                 </div>
-                <span
-                  style={{
-                    fontSize: '14px',
-                    color: '#666',
-                    fontWeight: '500',
-                  }}
-                >
-                  Weight
-                </span>
+                <span className={classes.aboutCardLabel}>Weight</span>
               </div>
 
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  padding: '24px',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '16px',
-                  border: `2px solid color-mix(in srgb, ${mainTypeColor}, #ffffff 70%)`,
-                }}
-              >
+              <div className={classes.aboutCard} style={aboutCardStyle}>
                 <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    marginBottom: '8px',
-                    color: mainTypeColor,
-                    fontWeight: '600',
-                  }}
+                  className={classes.aboutCardValue}
+                  style={aboutCardValueStyle}
                 >
                   <img
                     src={height}
                     alt="height-icon"
-                    style={{ width: '20px', height: '20px' }}
+                    className={classes.aboutCardIcon}
                   />
-                  <span style={{ fontSize: '24px', fontWeight: '700' }}>
+                  <span className={classes.aboutCardNumber}>
                     {pokemon.height} m
                   </span>
                 </div>
-                <span
-                  style={{
-                    fontSize: '14px',
-                    color: '#666',
-                    fontWeight: '500',
-                  }}
-                >
-                  Height
-                </span>
+                <span className={classes.aboutCardLabel}>Height</span>
               </div>
             </div>
           </div>
 
           {/* Stats Section */}
           <div>
-            <h2
-              style={{
-                fontSize: '24px',
-                fontWeight: '700',
-                color: mainTypeColor,
-                marginBottom: '24px',
-                borderBottom: `3px solid ${mainTypeColor}`,
-                paddingBottom: '8px',
-                display: 'inline-block',
-              }}
-            >
+            <h2 className={classes.statsTitle} style={statsTitleStyle}>
               Base Stats
             </h2>
 
-            <div
-              style={{
-                backgroundColor: '#f8f9fa',
-                borderRadius: '16px',
-                padding: '24px',
-                border: `2px solid color-mix(in srgb, ${mainTypeColor}, #ffffff 70%)`,
-              }}
-            >
+            <div className={classes.statsContainer} style={statsContainerStyle}>
               <StatComponent title="HP" value={pokemon.stats.hp} />
               <StatComponent title="ATK" value={pokemon.stats.attack} />
               <StatComponent title="DEF" value={pokemon.stats.defense} />
